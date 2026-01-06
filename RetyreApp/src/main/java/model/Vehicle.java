@@ -39,5 +39,8 @@ public class Vehicle {
     /* ------- METHODS ------- */
 
     /* ------- MAIN ------- */
+    static void main() {
+
+    }
 
 }

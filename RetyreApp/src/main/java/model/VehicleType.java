@@ -48,7 +48,7 @@ public class VehicleType {
      * @param s string to test
      * @return boolean
      */
-    // TO DO : Move to class/pacakge "Utilities" if there is a multiple usages
+    // TODO : Move to class/pacakge "Utilities" if there is a multiple usages
     private boolean checkString (String s){
         return (s!=null && !s.isEmpty());
     }
