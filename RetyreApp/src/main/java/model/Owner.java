@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * <h1>Owner</h1>
+ * Represents an owner of a vehicle
+ */
 public class Owner extends Person{
     /* ------- PARAMETERS ------- */
     private String personalDetails; //TODO:Add a class "Details"

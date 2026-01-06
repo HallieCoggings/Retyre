@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * <h1>Employee</h1>
+ * represents a garage's employee
+ */
 public class Employee extends Person{
     /* ------- PARAMETERS ------- */
     private String speciality; //TODO : Create Enum class with Specilities
@@ -22,6 +26,6 @@ public class Employee extends Person{
 
     /* ------- MAIN ------- */
     static void main() {
-        
+
     }
 }
