@@ -53,7 +53,7 @@ public class VehicleType {
         return (s!=null && !s.isEmpty());
     }
 
-    /* ------- PSVM ------- */
+    /* ------- MAIN ------- */
     static void main() {
     }
 }
