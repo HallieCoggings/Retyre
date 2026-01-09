@@ -5,6 +5,9 @@ import model.enums.EnergyType;
 import model.enums.TransmissionType;
 import utils.StringUtils;
 
+import java.util.Objects;
+import java.util.Set;
+
 /**
  * <h1>VehicleType</h1>
  * Represent a type of vehicle used in the application
@@ -44,6 +47,10 @@ public class VehicleType {
     @Column (name = "Power")
     private int power;
 
+    @OneToMany(mappedBy = "licencePlate",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    private Set<Vehicle> vehicleSet;
+
+
     /* ------- CONSTRUCTOR ------- */
     // Default
     public VehicleType(){
@@ -59,7 +66,7 @@ public class VehicleType {
             this.energy = energy;
             this.gear = gear;
             this.nbDoors = nbDoors;
-            this.nbPlace = nbPlace; 
+            this.nbPlace = nbPlace;
             this.power = power;
         }
     }
@@ -69,6 +76,32 @@ public class VehicleType {
 
 
     /* ------- METHODS ------- */
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        VehicleType that = (VehicleType) o;
+        return Objects.equals(brand, that.brand) && Objects.equals(model, that.model);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(brand, model);
+    }
+
+    @Override
+    public String toString() {
+        return "VehicleType{" +
+                "idVehiculeType=" + idVehiculeType +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", energy=" + energy +
+                ", gear=" + gear +
+                ", nbDoors=" + nbDoors +
+                ", nbPlace=" + nbPlace +
+                ", power=" + power +
+                '}';
+    }
 
     /* ------- MAIN ------- */
     static void main() {
