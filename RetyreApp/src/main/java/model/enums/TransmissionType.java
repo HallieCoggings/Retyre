@@ -1,6 +1,4 @@
-package model;
-
-import java.awt.*;
+package model.enums;
 
 public enum TransmissionType {
     MANUAL,

@@ -1,17 +1,47 @@
 package model;
 
+import jakarta.persistence.*;
+import model.enums.EnergyType;
+import model.enums.TransmissionType;
+import utils.StringUtils;
+
 /**
  * <h1>VehicleType</h1>
  * Represent a type of vehicle used in the application
  */
+@Table(name="TYPE")
+@Entity
 public class VehicleType {
     /* ------- PARAMETERS ------- */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idVehiculeType;
+
+    @Column(name = "Brand",
+            nullable = false,
+            length = 255)
     private String brand;
+
+    @Column(name = "Model",
+            nullable = false,
+            length = 100)
     private String model;
-    private String energy;
-    private String gear;
+
+    @Column(name = "Energy")
+    @Enumerated(EnumType.STRING)
+    private EnergyType energy;
+
+    @Column(name = "Transmission")
+    @Enumerated(EnumType.STRING)
+    private TransmissionType gear;
+
+    @Column(name ="Door")
     private int nbDoors;
+
+    @Column(name = "Places")
     private int nbPlace;
+
+    @Column (name = "Power")
     private int power;
 
     /* ------- CONSTRUCTOR ------- */
@@ -21,18 +51,16 @@ public class VehicleType {
     }
 
     // Data
-    public VehicleType(String brand, String model, String energy, String gear, int nbDoors, int nbPlace, int power) {
-        if (this.checkString(brand) && this.checkString(model) && this.checkString(energy)
-                && this.checkString(gear) && nbDoors>3 && nbPlace>2 && power >0) {
+    public VehicleType(String brand, String model, EnergyType energy, TransmissionType gear, int nbDoors,
+                       int nbPlace, int power) {
+        if (StringUtils.checkString(brand) && StringUtils.checkString(model) && nbDoors >3 && nbPlace > 2 && power >0) {
             this.brand = brand;
             this.model = model;
             this.energy = energy;
             this.gear = gear;
             this.nbDoors = nbDoors;
-            this.nbPlace = nbPlace;
+            this.nbPlace = nbPlace; 
             this.power = power;
-        }else{
-            return; // Maybe better to throw an exception
         }
     }
 
@@ -41,17 +69,6 @@ public class VehicleType {
 
 
     /* ------- METHODS ------- */
-    // 1) checkString
-    /**
-     * <h1>checkString</h1>
-     * Check if a string is null or empty
-     * @param s string to test
-     * @return boolean
-     */
-    // TODO : Move to class/pacakge "Utilities" if there is a multiple usages
-    private boolean checkString (String s){
-        return (s!=null && !s.isEmpty());
-    }
 
     /* ------- MAIN ------- */
     static void main() {
