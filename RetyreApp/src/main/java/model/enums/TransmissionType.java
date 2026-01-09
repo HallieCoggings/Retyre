@@ -2,7 +2,7 @@ package model;
 
 import java.awt.*;
 
-public enum InterventionCategory {
+public enum TransmissionType {
     MANUAL,
     AUTOMATIC;
 }
