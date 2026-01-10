@@ -5,6 +5,7 @@ import model.enums.EnergyType;
 import model.enums.TransmissionType;
 import utils.StringUtils;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ import java.util.Set;
  * <h1>VehicleType</h1>
  * Represent a type of vehicle used in the application
  */
-@Table(name="TYPE")
+
 @Entity
 public class VehicleType {
     /* ------- PARAMETERS ------- */
@@ -68,6 +69,7 @@ public class VehicleType {
             this.nbDoors = nbDoors;
             this.nbPlace = nbPlace;
             this.power = power;
+            this.vehicleSet = new HashSet<>();
         }
     }
 
@@ -100,6 +102,7 @@ public class VehicleType {
                 ", nbDoors=" + nbDoors +
                 ", nbPlace=" + nbPlace +
                 ", power=" + power +
+                ", vehicleSet=" + vehicleSet +
                 '}';
     }
 
