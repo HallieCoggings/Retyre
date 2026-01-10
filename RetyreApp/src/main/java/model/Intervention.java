@@ -3,6 +3,7 @@ package model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import model.enums.*;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -20,22 +21,6 @@ public class Intervention {
     @Column(name= "id_Intervention")
     private Integer idIntervention;
 
-    /*
-    @NotBlank(message = "The vehicle must have a matriculation / Le vehicule doit avoir une plaque d'immatriculation")
-    @Size(min=7, max=15, message="Matriculation must be valid format / La plaque d'immatriculation doit avoir un format valide \n Must be between 7 and 15 alphabetical and numerical symbols separated by '-' / Doit comprendre entre 7 et 15 caracteres et etre separes par un '-' ")
-    @Pattern(
-            regexp = "^[A-Z0-9\\s]{7,15}$",
-            message = "Invalid format: all caps letters, numbers, and dash only \n" +
-                    "Format invalide: lettres majuscules, numeros et tirets seulement"
-    )
-    @Column(name="matriculation", length = 15, nullable = false, unique = true)
-    private String matriculation;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_TypeIntervention", nullable = false)
-    @NotNull(message = "You must enter an intervention type / Vous devez entrer un type d'intervention")
-    private InterventionType interventionType;*/
-
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name="FK_Vehicle")
     private Vehicle vehicle;
@@ -48,23 +33,56 @@ public class Intervention {
     @JoinColumn(name="FK_IntervType")
     private InterventionType interventionType;
 
+    @Column(name="DateIntervention")
+    private LocalDate interventionDate;
+
     /* ------- CONSTRUCTOR ------- */
     //Default
     public Intervention(){
 
     }
 
-    public Intervention(Vehicle v, Employee e, InterventionType interType){
-        if (v !=null && e!=null && interType !=null){
+    public Intervention(Vehicle v, Employee e, InterventionType interType, LocalDate interventionDate){
+        if (v !=null && e!=null && interType !=null && interventionDate!=null){
             this.vehicle =v;
             this.employee = e;
             this.interventionType = interType;
+            this.interventionDate = interventionDate;
         }
     }
 
     /* ------- GETTER & SETTER ------- */
+    public InterventionType getInterventionType() {
+        return interventionType;
+    }
+
+    public void setInterventionType(InterventionType interventionType) {
+        this.interventionType = interventionType;
+    }
 
     /* ------- METHODS ------- */
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Intervention that = (Intervention) o;
+        return Objects.equals(idIntervention, that.idIntervention) && Objects.equals(vehicle, that.vehicle) && Objects.equals(employee, that.employee);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idIntervention, vehicle, employee);
+    }
+
+    @Override
+    public String toString() {
+        return "Intervention{" +
+                "idIntervention=" + idIntervention +
+                ", vehicle=" + vehicle +
+                ", employee=" + employee +
+                ", interventionType=" + interventionType +
+                ", interventionDate=" + interventionDate +
+                '}';
+    }
 
     /* ------- MAIN ------- */
     static void main() {
