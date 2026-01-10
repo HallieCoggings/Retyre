@@ -3,6 +3,8 @@ package model;
 import jakarta.persistence.*;
 import utils.StringUtils;
 
+import java.util.Objects;
+
 /**
  * <h1>Person</h1>
  * Abstract - Represent a person
@@ -39,4 +41,15 @@ public abstract class Person {
 
 
     /* ------- METHODS ------- */
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(name, person.name) && Objects.equals(firstName, person.firstName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, firstName);
+    }
 }

@@ -5,6 +5,7 @@ import utils.StringUtils;
 import model.enums.Speciality;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -36,6 +37,25 @@ public class Employee extends Person{
     /* ------- GETTER & SETTER ------- */
 
     /* ------- METHODS ------- */
+    public boolean addIntervention (Intervention i){
+        if (i==null){return false;}
+        if (this.realised.contains(i)){return false;}
+        this.realised.add(i);
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Employee employee = (Employee) o;
+        return speciality == employee.speciality;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), speciality);
+    }
 
     /* ------- MAIN ------- */
     static void main() {

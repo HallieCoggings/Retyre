@@ -42,10 +42,9 @@ public class Intervention {
 
     }
 
-    public Intervention(Vehicle v, Employee e, InterventionType interType, LocalDate interventionDate){
-        if (v !=null && e!=null && interType !=null && interventionDate!=null){
+    public Intervention(Vehicle v, InterventionType interType, LocalDate interventionDate){
+        if (v !=null && interType !=null && interventionDate!=null){
             this.vehicle =v;
-            this.employee = e;
             this.interventionType = interType;
             this.interventionDate = interventionDate;
         }
@@ -60,6 +59,9 @@ public class Intervention {
         this.interventionType = interventionType;
     }
 
+    public void setEmployee(Employee employee) {
+        employee.addIntervention(this);
+    }
     /* ------- METHODS ------- */
     @Override
     public boolean equals(Object o) {
