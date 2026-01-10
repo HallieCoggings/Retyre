@@ -33,6 +33,10 @@ public class Piece {
     @ManyToMany(mappedBy = "piecesUsed")
     private Set<InterventionType> usedIn;
 
+    @ManyToMany(mappedBy = "components")
+    private Set<VehicleType> installedOn;
+
+
     /* ------- CONSTRUCTOR ------- */
     public Piece(){}
 
@@ -45,6 +49,7 @@ public class Piece {
             this.description = description;
             this.category = category;
             this.usedIn = new HashSet<>();
+            this.installedOn = new HashSet<>();
         }
     }
 
@@ -58,6 +63,13 @@ public class Piece {
         if (i==null){return false;}
         if(this.usedIn.contains(i)){return false;}
         this.usedIn.add(i);
+        return true;
+    }
+
+    public boolean addInstallation (VehicleType v){
+        if (v==null){return false;}
+        if (this.installedOn.contains(v)) {return false;}
+        this.installedOn.add(v);
         return true;
     }
     @Override

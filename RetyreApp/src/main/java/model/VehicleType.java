@@ -51,6 +51,14 @@ public class VehicleType {
     @OneToMany(mappedBy = "vType",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private Set<Vehicle> vehicleSet;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "VehicleCompo",
+            joinColumns = @JoinColumn(name = "FK_Vehicle"),
+            inverseJoinColumns = @JoinColumn(name = "FK_Piece")
+    )
+    private Set<Piece> components;
+
 
     /* ------- CONSTRUCTOR ------- */
     // Default
@@ -70,6 +78,7 @@ public class VehicleType {
             this.nbPlace = nbPlace;
             this.power = power;
             this.vehicleSet = new HashSet<>();
+            this.components = new HashSet<>();
         }
     }
 
@@ -103,6 +112,14 @@ public class VehicleType {
         if(!this.vehicleSet.contains(v)){return false;}
         v.setvType(null);
         this.vehicleSet.remove(v);
+        return true;
+    }
+
+    public boolean addPiece (Piece p){
+        if (p==null){return false;}
+        if (this.components.contains(p)){return false;}
+        this.components.add(p);
+        p.addInstallation(this);
         return true;
     }
 

@@ -48,6 +48,7 @@ public class Test2 {
                 Intervention i2 = new Intervention(v1,it2,LocalDate.of(2077,7,8));
 
 
+                vType1.addPiece(p1);
 
                 i1.setEmployee(e1);
                 i2.setEmployee(e1);
