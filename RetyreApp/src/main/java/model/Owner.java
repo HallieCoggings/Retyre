@@ -24,7 +24,6 @@ public class Owner extends Person{
     /* ------- CONSTRUCTOR ------- */
     //Default
     public Owner(){
-        super();
     }
 
     //Data
@@ -39,16 +38,36 @@ public class Owner extends Person{
     /* ------- GETTER & SETTER ------- */
 
     /* ------- METHODS ------- */
+    public boolean addVehicle(Vehicle v){
+        if (v==null){return false;}
+        if (this.vehicles.contains(v)){return false;}
+
+        this.vehicles.add(v);
+        v.setOwner(this);
+
+        return true;
+    }
+
+    public boolean delVehicle(Vehicle v){
+        if (v==null){return false;}
+        if (!this.vehicles.contains(v)){return false;}
+
+        v.setOwner(null);
+        this.vehicles.remove(v);
+        return true;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Owner owner = (Owner) o;
-        return Objects.equals(personalDetails, owner.personalDetails) && Objects.equals(vehicles, owner.vehicles);
+        return Objects.equals(personalDetails, owner.personalDetails);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(personalDetails, vehicles);
+        return Objects.hashCode(personalDetails);
     }
 
     @Override

@@ -43,10 +43,10 @@ public class Vehicle {
     public Vehicle(String licencePlate, VehicleType vType, Owner owner, float mileage, Date dateCirculation) {
         if (StringUtils.checkString(licencePlate) && vType != null && owner != null && mileage>0 && dateCirculation != null) {
             this.licencePlate = licencePlate;
-            this.vType = vType;
             this.owner = owner;
             this.mileage = mileage;
             this.dateCirculation = dateCirculation;
+            if(!vType.addVehicle(this)){return;} //TODO : verify behaviour
         }
     }
 
@@ -54,9 +54,24 @@ public class Vehicle {
 
 
     /* ------- GETTER & SETTER ------- */
+    public Owner getOwner() {
+        return owner;
+    }
 
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    public VehicleType getvType() {
+        return vType;
+    }
+
+    public void setvType(VehicleType vType) {
+        this.vType = vType;
+    }
 
     /* ------- METHODS ------- */
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

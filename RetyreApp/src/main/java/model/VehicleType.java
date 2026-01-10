@@ -75,9 +75,29 @@ public class VehicleType {
 
     /* ------- GETTER & SETTER ------- */
 
+    public Set<Vehicle> getVehicleSet() {
+        return vehicleSet;
+    }
 
-
+    public void setVehicleSet(Set<Vehicle> vehicleSet) {
+        this.vehicleSet = vehicleSet;
+    }
     /* ------- METHODS ------- */
+    public boolean addVehicle(Vehicle v){
+        if(v==null){return false;}
+        if(this.vehicleSet.contains(v)){return false;}
+        v.setvType(this);
+        this.vehicleSet.add(v);
+        return true;
+    }
+
+    public boolean remove(Vehicle v){
+        if(v==null){return false;}
+        if(!this.vehicleSet.contains(v)){return false;}
+        v.setvType(null);
+        this.vehicleSet.remove(v);
+        return true;
+    }
 
     @Override
     public boolean equals(Object o) {

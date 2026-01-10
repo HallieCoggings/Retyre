@@ -1,5 +1,7 @@
 package model;
 
+import utils.StringUtils;
+
 /**
  * <h1>Employee</h1>
  * represents a garage's employee
@@ -15,8 +17,8 @@ public class Employee extends Person{
 
     public Employee(String name, String fName, String spe) {
         super(name,fName);
-        if (super.checkString(spe)){
-            this.speciality = spe;
+        if(StringUtils.checkString(spe)){
+            this.speciality=spe;
         }
     }
 
