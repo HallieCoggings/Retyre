@@ -13,7 +13,7 @@ import java.util.Set;
  * <h1>VehicleType</h1>
  * Represent a type of vehicle used in the application
  */
-
+@Table(name="VehicleType")
 @Entity
 public class VehicleType {
     /* ------- PARAMETERS ------- */
