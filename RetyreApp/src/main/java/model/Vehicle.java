@@ -3,7 +3,7 @@ package model;
 import jakarta.persistence.*;
 import utils.StringUtils;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -32,7 +32,7 @@ public class Vehicle {
     private float mileage;
 
     @Column(name= "CirculationDate")
-    private Date dateCirculation; //from java.util
+    private LocalDate dateCirculation; //from java.util
 
     /* ------- CONSTRUCTOR ------- */
     //Default
@@ -40,13 +40,13 @@ public class Vehicle {
     }
 
     //Data
-    public Vehicle(String licencePlate, VehicleType vType, Owner owner, float mileage, Date dateCirculation) {
+    public Vehicle(String licencePlate, VehicleType vType, Owner owner, float mileage, LocalDate dateCirculation) {
         if (StringUtils.checkString(licencePlate) && vType != null && owner != null && mileage>0 && dateCirculation != null) {
             this.licencePlate = licencePlate;
-            this.owner = owner;
             this.mileage = mileage;
             this.dateCirculation = dateCirculation;
-            if(!vType.addVehicle(this)){return;} //TODO : verify behaviour
+            if(!vType.addVehicle(this)){return;} //TODO : verify if its good pratice
+            if(!owner.addVehicle(this)){return;}
         }
     }
 
