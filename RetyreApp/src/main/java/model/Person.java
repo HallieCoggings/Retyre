@@ -11,7 +11,39 @@ import java.util.Objects;
  * Abstract class representing a person.
  * Parent class for Owner and Employee
  */
+/*
+public abstract class Person {
+    /* ------- PARAMETERS ------- */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idPerson;
 
+    @Column(name = "Name",nullable = false,length = 255)
+    private String name;
+
+    @Column(name = "First Name", nullable = false, length = 255)
+    private String firstName;
+
+    /* ------- CONSTRUCTOR ------- */
+    //Default
+    public Person(){
+    }
+
+    public Person(String name, String firstName) {
+        if (StringUtils.checkString(name) && StringUtils.checkString(firstName)) {
+            this.name = name;
+            this.firstName = firstName;
+        }
+    }
+
+    /* ------- GETTER & SETTER ------- */
+
+
+
+    /* ------- METHODS ------- */
+}
+
+*/
 @Entity
 @Table(name = "person")
 @Inheritance(strategy = InheritanceType.JOINED)
