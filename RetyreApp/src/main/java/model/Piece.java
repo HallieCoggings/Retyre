@@ -1,46 +1,83 @@
 package model;
 
+import jakarta.persistence.*;
+import utils.StringUtils;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 /**
  *<h1>Piece</h1>
  * Represent a part of a Vehicle
  */
+@Entity
 public class Piece {
     /* ------- PARAMETERS ------- */
+    @Id
+    @Column(name="Ref")
     private String reference;
+
+    @Column(name="Name")
     private String name;
-    private float price;
+
+    @Column(name="PU(euro)",columnDefinition = "NUMERIC(10,2)")
+    private double priceU;
+
+    @Column(name="Desc")
     private String description;
+
+    @Column(name="Category")
     private String category;
+
+    @ManyToMany(mappedBy = "piecesUsed")
+    private Set<InterventionType> usedIn;
 
     /* ------- CONSTRUCTOR ------- */
     public Piece(){}
 
-    public Piece (String ref, String name,float price, String desc, String ctg){
-        if (this.checkString(ref) && this.checkString(name) && price>0 &&
-                this.checkString(desc) && this.checkString(ctg)){
-            this.reference = ref;
+    public Piece(String name, double priceU, String description, String category) {
+        if (StringUtils.checkString(name) && StringUtils.checkString(description) && StringUtils.checkString(category)
+            && priceU >0) {
             this.name = name;
-            this.price = price;
-            this.description = desc;
-            this.category = ctg;
+            this.priceU = priceU;
+            this.description = description;
+            this.category = category;
+            this.usedIn = new HashSet<>();
         }
     }
 
     /* ------- GETTER & SETTER ------- */
 
     /* ------- METHODS ------- */
-    // 1) checkString
-    /**
-     * <h1>checkString</h1>
-     * Check if a string is null or empty
-     * @param s string to test
-     * @return boolean
-     */
-    // TODO : Move to class/pacakge "Utilities" if there is a multiple usages
-    private boolean checkString (String s){
-        return (s!=null && !s.isEmpty());
+    public boolean addUsage (InterventionType i){
+        if (i==null){return false;}
+        if(this.usedIn.contains(i)){return false;}
+        this.usedIn.add(i);
+        return true;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return Objects.equals(reference, piece.reference) && Objects.equals(name, piece.name) && Objects.equals(category, piece.category);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(reference, name, category);
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "reference='" + reference + '\'' +
+                ", name='" + name + '\'' +
+                ", priceU=" + priceU +
+                ", description='" + description + '\'' +
+                ", category='" + category + '\'' +
+                '}';
+    }
     /* ------- MAIN ------- */
     static void main() {
 
