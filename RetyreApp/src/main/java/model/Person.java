@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 /*
 public abstract class Person {
-    /* ------- PARAMETERS ------- */
+    //PARAMETERS
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPerson;
@@ -24,7 +24,7 @@ public abstract class Person {
     @Column(name = "First Name", nullable = false, length = 255)
     private String firstName;
 
-    /* ------- CONSTRUCTOR ------- */
+    //CONSTRUCTOR
     //Default
     public Person(){
     }
@@ -36,11 +36,11 @@ public abstract class Person {
         }
     }
 
-    /* ------- GETTER & SETTER ------- */
+    //GETTER SETTER
 
 
 
-    /* ------- METHODS ------- */
+    //METHOD
 }
 
 */
