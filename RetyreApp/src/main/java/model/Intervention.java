@@ -24,7 +24,7 @@ public class Intervention {
     @Column(name= "id_Intervention")
     private Integer id;
 
-    /* -- J'ai craque mon slip, ce n'est pas du tout ici qu'il doit etre celui-la mauvaise table
+    /* -- J'ai craque mon slip, ce n'est pas du tout ici qu'il doit etre celui-la mauvaise table mais tu peux t'en servir pour vehicule du coup stv
 
     @NotBlank(message = "The vehicle must have a matriculation / Le vehicule doit avoir une plaque d'immatriculation")
     @Size(min=7, max=15, message="Matriculation must be valid format / La plaque d'immatriculation doit avoir un format valide \n Must be between 7 and 15 alphabetical and numerical symbols separated by '-' / Doit comprendre entre 7 et 15 caracteres et etre separes par un '-' ")
