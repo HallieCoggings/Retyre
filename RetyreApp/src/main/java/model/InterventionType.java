@@ -22,6 +22,7 @@ public class InterventionType {
     private String name;
 
     @Column(name="Category")
+    @Enumerated(EnumType.STRING)
     private InterventionCategory category;
 
     @Column(name = "kmMax")
@@ -48,7 +49,7 @@ public class InterventionType {
 
     //Data
     public InterventionType(String name,InterventionCategory category, int kmMax, int delay) {
-        if (StringUtils.checkString(name) && category != null && kmMax >0 && delay>0) {
+        if (StringUtils.checkString(name) && category != null && kmMax >=0 && delay>=0) {
             this.name = name;
             this.category = category;
             this.interventionSet = new HashSet<>();

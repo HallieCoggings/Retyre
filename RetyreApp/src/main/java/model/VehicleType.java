@@ -48,7 +48,7 @@ public class VehicleType {
     @Column (name = "Power")
     private int power;
 
-    @OneToMany(mappedBy = "licencePlate",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "vType",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private Set<Vehicle> vehicleSet;
 
 
@@ -61,7 +61,7 @@ public class VehicleType {
     // Data
     public VehicleType(String brand, String model, EnergyType energy, TransmissionType gear, int nbDoors,
                        int nbPlace, int power) {
-        if (StringUtils.checkString(brand) && StringUtils.checkString(model) && nbDoors >3 && nbPlace > 2 && power >0) {
+        if (StringUtils.checkString(brand) && StringUtils.checkString(model) && nbDoors >=3 && nbPlace >= 2 && power >0) {
             this.brand = brand;
             this.model = model;
             this.energy = energy;

@@ -21,10 +21,10 @@ public class Piece {
     @Column(name="Name")
     private String name;
 
-    @Column(name="PU(euro)",columnDefinition = "NUMERIC(10,2)")
+    @Column(name="PU_eur)",columnDefinition = "NUMERIC(10,2)")
     private double priceU;
 
-    @Column(name="Desc")
+    @Column(name="Description")
     private String description;
 
     @Column(name="Category")
@@ -36,9 +36,10 @@ public class Piece {
     /* ------- CONSTRUCTOR ------- */
     public Piece(){}
 
-    public Piece(String name, double priceU, String description, String category) {
-        if (StringUtils.checkString(name) && StringUtils.checkString(description) && StringUtils.checkString(category)
+    public Piece(String ref, String name, double priceU, String description, String category) {
+        if (StringUtils.checkString(ref)&&StringUtils.checkString(name) && StringUtils.checkString(description) && StringUtils.checkString(category)
             && priceU >0) {
+            this.reference =ref;
             this.name = name;
             this.priceU = priceU;
             this.description = description;

@@ -45,8 +45,8 @@ public class Intervention {
     public Intervention(Vehicle v, InterventionType interType, LocalDate interventionDate){
         if (v !=null && interType !=null && interventionDate!=null){
             this.vehicle =v;
-            this.interventionType = interType;
             this.interventionDate = interventionDate;
+            if(!interType.addIntervention(this)){return;}
         }
     }
 
@@ -61,6 +61,7 @@ public class Intervention {
 
     public void setEmployee(Employee employee) {
         employee.addIntervention(this);
+        this.employee =employee;
     }
     /* ------- METHODS ------- */
     @Override
