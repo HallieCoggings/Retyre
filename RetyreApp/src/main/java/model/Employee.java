@@ -12,6 +12,37 @@ import java.util.stream.Collectors;
  * Represents a garage employee/technician/...
  * Inherits from Person
  */
+
+/*
+    @Column(name="SPE")
+    @Enumerated(EnumType.STRING)
+    private Speciality speciality;
+
+    @OneToMany(mappedBy = "employee")
+    private Set<Intervention> realised;
+
+    /* ------- CONSTRUCTOR ------- */
+    public Employee(){
+
+    }
+
+    public Employee(String name, String fName, Speciality spe) {
+        super(name,fName);
+        this.speciality = spe;
+        this.realised = new HashSet<>();
+    }
+
+    /* ------- GETTER & SETTER ------- */
+
+    /* ------- METHODS ------- */
+
+    /* ------- MAIN ------- */
+    static void main() {
+
+    }
+}
+*/
+    
 @Entity
 @Table(name = "employee")
 @DiscriminatorValue("EMPLOYEE")
