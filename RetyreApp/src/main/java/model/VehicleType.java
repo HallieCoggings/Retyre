@@ -74,6 +74,13 @@ public class VehicleType {
     }
 
     /* ------- GETTER & SETTER ------- */
+    public int getNbDoors() {
+        return nbDoors;
+    }
+
+    public int getNbPlace() {
+        return nbPlace;
+    }
 
     public Set<Vehicle> getVehicleSet() {
         return vehicleSet;

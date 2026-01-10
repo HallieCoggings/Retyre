@@ -1,0 +1,18 @@
+create table Employee (idPerson integer not null, SPE enum ('COACHBUILDER','ELECTRONIC','MACHINERY'), primary key (idPerson)) engine=InnoDB;
+create table Intervention (DateIntervention date, FK_Employee integer, FK_IntervType integer, Price NUMERIC(10,2), id_Intervention integer not null auto_increment, FK_Vehicle varchar(15), Status enum ('CANCELED','DONE','ONGOING','ONHOLD'), primary key (id_Intervention)) engine=InnoDB;
+create table InterventionType (DaysBetween integer, idInterventionType integer not null auto_increment, kmMax integer, Name varchar(255), Category enum ('MAINTENANCE','REPAIR'), primary key (idInterventionType)) engine=InnoDB;
+create table Owner (idPerson integer not null, Personal varchar(255) not null, primary key (idPerson)) engine=InnoDB;
+create table Person (idPerson integer not null auto_increment, P_Type varchar(31) not null check (P_Type in ('Owner','Employee')), `First Name` varchar(255) not null, Name varchar(255) not null, primary key (idPerson)) engine=InnoDB;
+create table Piece (`PU_eur)` NUMERIC(10,2), Category varchar(255), Description varchar(255), Name varchar(255), Ref varchar(255) not null, primary key (Ref)) engine=InnoDB;
+create table PiecesUsed (FK_InterventionType integer not null, FK_Piece varchar(255) not null, primary key (FK_InterventionType, FK_Piece)) engine=InnoDB;
+create table Vehicle (CirculationDate date, FK_Owner integer, FK_TypeV integer, Mileage NUMERIC(10,2), licencePlate varchar(15) not null, primary key (licencePlate)) engine=InnoDB;
+create table VehicleType (Door integer, Places integer, Power integer, idVehiculeType integer not null auto_increment, Model varchar(100) not null, Brand varchar(255) not null, Energy enum ('DIESEL','ELECTRIC','FUEL','HYBRID'), Transmission enum ('AUTOMATIC','MANUAL'), primary key (idVehiculeType)) engine=InnoDB;
+alter table Employee add constraint FK3r2xvxojq96mrc9xiygmc3vo1 foreign key (idPerson) references Person (idPerson);
+alter table Intervention add constraint FKffg5tjusrkhg4ntdvrmt5gls foreign key (FK_Employee) references Employee (idPerson);
+alter table Intervention add constraint FKj540axp5qqxcrqbe8hpjr336b foreign key (FK_IntervType) references InterventionType (idInterventionType);
+alter table Intervention add constraint FKlxv41dh7s9kp183yj7019sqbs foreign key (FK_Vehicle) references Vehicle (licencePlate);
+alter table Owner add constraint FKqtaj1uip81cy4alrta396gcyy foreign key (idPerson) references Person (idPerson);
+alter table PiecesUsed add constraint FKh6c1g6svfmgdlujpdh7qbfqp8 foreign key (FK_Piece) references Piece (Ref);
+alter table PiecesUsed add constraint FKpofwyef55idux43vkf5l3teua foreign key (FK_InterventionType) references InterventionType (idInterventionType);
+alter table Vehicle add constraint FKch3hhykb3us6lrlp0paspvnl8 foreign key (FK_Owner) references Owner (idPerson);
+alter table Vehicle add constraint FKfkuf8uqtm3164f4d2qnkalqux foreign key (FK_TypeV) references VehicleType (idVehiculeType);

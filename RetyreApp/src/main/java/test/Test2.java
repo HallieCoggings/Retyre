@@ -55,6 +55,9 @@ public class Test2 {
                 it1.addPieceUsed(p1);
                 it2.addPieceUsed(p2);
 
+                i2.beginIntervention();
+                i2.endIntervention();
+
                 em.persist(vType1);
                 em.persist(owner1);
                 em.persist(e1);

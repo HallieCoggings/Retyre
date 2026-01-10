@@ -1,14 +1,13 @@
 package model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import model.enums.*;
 import java.time.LocalDate;
 import java.util.*;
 
 /**
  * <h1>Intervention</h1>
- * Used for any kinf od intervention
+ * Used for any kind of intervention
  * v1.0
  */
 
@@ -36,6 +35,13 @@ public class Intervention {
     @Column(name="DateIntervention")
     private LocalDate interventionDate;
 
+    @Column(name="Price",columnDefinition = "NUMERIC(10,2)")
+    private double price;
+
+    @Column(name="Status")
+    @Enumerated(EnumType.STRING)
+    private InterventionStatus status;
+
     /* ------- CONSTRUCTOR ------- */
     //Default
     public Intervention(){
@@ -46,6 +52,8 @@ public class Intervention {
         if (v !=null && interType !=null && interventionDate!=null){
             this.vehicle =v;
             this.interventionDate = interventionDate;
+            this.price = 0;
+            this.status = InterventionStatus.ONGOING;
             if(!interType.addIntervention(this)){return;}
         }
     }
@@ -63,7 +71,27 @@ public class Intervention {
         employee.addIntervention(this);
         this.employee =employee;
     }
+
     /* ------- METHODS ------- */
+    public boolean beginIntervention (){
+        if (this.status != InterventionStatus.ONGOING) {return false;}
+        this.status=InterventionStatus.ONHOLD;
+        return true;
+    }
+
+    public boolean endIntervention () {
+            if (this.status != InterventionStatus.ONHOLD) {return false;}
+            this.status = InterventionStatus.DONE;
+
+            for (Piece p : this.interventionType.getPiecesUsed()){
+                this.price+=p.getPriceU();
+            }
+
+            this.price += (vehicle.getvType().getNbDoors()+vehicle.getvType().getNbPlace())*5;
+            return true;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

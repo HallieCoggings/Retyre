@@ -49,6 +49,9 @@ public class Piece {
     }
 
     /* ------- GETTER & SETTER ------- */
+    public double getPriceU() {
+        return priceU;
+    }
 
     /* ------- METHODS ------- */
     public boolean addUsage (InterventionType i){

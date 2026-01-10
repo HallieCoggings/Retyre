@@ -77,6 +77,12 @@ public class Vehicle {
     }
 
     /* ------- METHODS ------- */
+    public boolean addIntervention (Intervention i) {
+        if (i==null){return false;}
+        if (this.interventions.contains(i)){return false;}
+        this.interventions.add(i);
+        return true;
+    }
 
     @Override
     public boolean equals(Object o) {

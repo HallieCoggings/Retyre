@@ -41,6 +41,7 @@ public class InterventionType {
             inverseJoinColumns = @JoinColumn(name = "FK_Piece")
     )
     private Set<Piece> piecesUsed = new HashSet<>();
+
     /* ------- CONSTRUCTOR ------- */
     //Default
     public InterventionType() {
@@ -62,6 +63,9 @@ public class InterventionType {
     }
 
     /* ------- GETTER & SETTER ------- */
+    public Set<Piece> getPiecesUsed() {
+        return piecesUsed;
+    }
 
     /* ------- METHODS ------- */
     public boolean addIntervention (Intervention i){
