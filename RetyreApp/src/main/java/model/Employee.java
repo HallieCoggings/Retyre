@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
     @OneToMany(mappedBy = "employee")
     private Set<Intervention> realised;
 
-    /* ------- CONSTRUCTOR ------- */
+    //CONSTRUCTOR
     public Employee(){
 
     }
@@ -32,11 +32,11 @@ import java.util.stream.Collectors;
         this.realised = new HashSet<>();
     }
 
-    /* ------- GETTER & SETTER ------- */
+    //GETTER SETTER
 
-    /* ------- METHODS ------- */
+    //METHODS
 
-    /* ------- MAIN ------- */
+    //MAIN
     static void main() {
 
     }
