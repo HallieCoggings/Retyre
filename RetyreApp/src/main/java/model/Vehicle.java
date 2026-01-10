@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import utils.StringUtils;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * <h1>Vehicle</h1>
@@ -28,6 +30,9 @@ public class Vehicle {
     @JoinColumn(name="FK_Owner")
     private Owner owner;
 
+    @OneToMany(mappedBy = "vehicle")
+    private Set<Intervention> interventions;
+
     @Column(name = "Mileage", columnDefinition = "NUMERIC(10,2)")
     private float mileage;
 
@@ -45,6 +50,7 @@ public class Vehicle {
             this.licencePlate = licencePlate;
             this.mileage = mileage;
             this.dateCirculation = dateCirculation;
+            this.interventions = new HashSet<>();
             if(!vType.addVehicle(this)){return;} //TODO : verify if its good pratice
             if(!owner.addVehicle(this)){return;}
         }
