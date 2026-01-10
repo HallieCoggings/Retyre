@@ -76,6 +76,10 @@ public class Vehicle {
         this.vType = vType;
     }
 
+    public float getMileage() {
+        return mileage;
+    }
+
     /* ------- METHODS ------- */
     public boolean addIntervention (Intervention i) {
         if (i==null){return false;}

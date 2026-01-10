@@ -56,7 +56,7 @@ public class Test2 {
                 it2.addPieceUsed(p2);
 
                 i2.beginIntervention();
-                i2.endIntervention();
+                Intervention i3 = i2.endIntervention();
 
                 em.persist(vType1);
                 em.persist(owner1);
@@ -68,6 +68,7 @@ public class Test2 {
                 em.persist(it2);
                 em.persist(i1);
                 em.persist(i2);
+                em.persist(i3);
 
                 et.commit();
             }catch (Exception e){

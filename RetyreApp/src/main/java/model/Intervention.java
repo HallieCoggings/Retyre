@@ -17,7 +17,7 @@ public class Intervention {
     /* ------- PARAMETERS ------- */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "id_Intervention")
+    @Column(name= "idIntervention")
     private Integer idIntervention;
 
     @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
@@ -42,6 +42,9 @@ public class Intervention {
     @Enumerated(EnumType.STRING)
     private InterventionStatus status;
 
+    @Column(name="kmMax")
+    private float kmMax;
+
     /* ------- CONSTRUCTOR ------- */
     //Default
     public Intervention(){
@@ -53,16 +56,13 @@ public class Intervention {
             this.vehicle =v;
             this.interventionDate = interventionDate;
             this.price = 0;
+            this.kmMax = 0;
             this.status = InterventionStatus.ONGOING;
             if(!interType.addIntervention(this)){return;}
         }
     }
 
     /* ------- GETTER & SETTER ------- */
-    public InterventionType getInterventionType() {
-        return interventionType;
-    }
-
     public void setInterventionType(InterventionType interventionType) {
         this.interventionType = interventionType;
     }
@@ -72,6 +72,10 @@ public class Intervention {
         this.employee =employee;
     }
 
+    public void setKmMax(float kmMax) {
+        this.kmMax = kmMax;
+    }
+
     /* ------- METHODS ------- */
     public boolean beginIntervention (){
         if (this.status != InterventionStatus.ONGOING) {return false;}
@@ -79,8 +83,8 @@ public class Intervention {
         return true;
     }
 
-    public boolean endIntervention () {
-            if (this.status != InterventionStatus.ONHOLD) {return false;}
+    public Intervention endIntervention () {
+            if (this.status != InterventionStatus.ONHOLD) {return null;}
             this.status = InterventionStatus.DONE;
 
             for (Piece p : this.interventionType.getPiecesUsed()){
@@ -88,7 +92,14 @@ public class Intervention {
             }
 
             this.price += (vehicle.getvType().getNbDoors()+vehicle.getvType().getNbPlace())*5;
-            return true;
+
+            if (this.interventionType.getCategory() == InterventionCategory.MAINTENANCE) {
+                Intervention next = new Intervention(this.vehicle,this.interventionType,
+                        this.interventionDate.plusDays(this.interventionType.getDelay()));
+                next.setKmMax(this.vehicle.getMileage()+this.interventionType.getKmMax());
+                return next;
+            }
+            return null;
     }
 
 

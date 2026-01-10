@@ -67,6 +67,18 @@ public class InterventionType {
         return piecesUsed;
     }
 
+    public InterventionCategory getCategory() {
+        return category;
+    }
+
+    public int getDelay() {
+        return delay;
+    }
+
+    public int getKmMax() {
+        return kmMax;
+    }
+
     /* ------- METHODS ------- */
     public boolean addIntervention (Intervention i){
         if (i==null){return false;}
