@@ -48,10 +48,11 @@ public class AddVehiclePanel extends JPanel {
         JLabel nbPlaceLab = new JLabel("Number of Place :");
         JLabel powerLab = new JLabel("Power :");
         JLabel compoLab = new JLabel("Components :");
+        JLabel msgSuccess = new JLabel("A new vehicle type was added");
 
         titleLab.setFont(font);brandLab.setFont(font);modelLab.setFont(font);energyLab.setFont(font);
         nbDoorLab.setFont(font);gearLab.setFont(font);nbPlaceLab.setFont(font);powerLab.setFont(font);
-        compoLab.setFont(font);
+        compoLab.setFont(font); msgSuccess.setFont(font);
 
         //Set JtextFile
         this.brandField = new JTextField(20);
@@ -135,12 +136,18 @@ public class AddVehiclePanel extends JPanel {
                 int power = (int) powerField.getValue();
                 VehicleType vType = new VehicleType(brand,model,energy,gear,nbDoor,nbPlace,power);
                 if (server.addVehicle(vType)) {
-                    System.out.println("OUI");
+                    msgSuccess.setVisible(true);
                 }
             }
         });
-
         this.add(saveButton,gbc);
+
+        //Line 5
+        gbc.gridy = 6;
+        gbc.gridx = 0;
+        gbc.gridwidth = 4;
+        this.add(msgSuccess,gbc);
+        msgSuccess.setVisible(false);
 
         this.setPreferredSize(new Dimension(1920,1080));
 
