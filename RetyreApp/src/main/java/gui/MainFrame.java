@@ -28,7 +28,7 @@ public class MainFrame extends JFrame {
         this.add(header,BorderLayout.NORTH);
         this.add(body,BorderLayout.CENTER);
 
-        this.setSize(1200,800);
+        this.setSize(1920,1080);
         this.setVisible(true);
     }
 
