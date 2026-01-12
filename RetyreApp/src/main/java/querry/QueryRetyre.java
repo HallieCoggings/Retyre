@@ -1,7 +1,7 @@
 package querry;
 
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.*;
+import model.VehicleType;
 
 /**
  * <h1>QueryRetyre</h1>
@@ -12,5 +12,22 @@ public class QueryRetyre {
 
     public QueryRetyre(){
         this.emf = Persistence.createEntityManagerFactory("RetyrePU");
+    }
+
+    public boolean addVehicle (VehicleType v){
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        try{
+            et.begin();
+            em.persist(v);;
+            et.commit();
+        }catch (Exception e){
+            System.out.println("Rollback");
+            et.rollback();
+            return false;
+        }finally {
+            em.close();
+        }
+        return true;
     }
 }

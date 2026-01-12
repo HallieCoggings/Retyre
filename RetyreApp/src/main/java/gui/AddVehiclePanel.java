@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import model.VehicleType;
 import model.enums.EnergyType;
 import model.enums.TransmissionType;
+import querry.QueryRetyre;
 
 public class AddVehiclePanel extends JPanel {
 
@@ -21,13 +22,15 @@ public class AddVehiclePanel extends JPanel {
     private JComboBox<TransmissionType> gearField;
     private JSpinner nbPlaceField;
     private JSpinner powerField;
+    private QueryRetyre server;
 
 
-    public AddVehiclePanel(){
+    public AddVehiclePanel(QueryRetyre server){
         super();
         this.setBackground(Color.decode("#FFd75F"));
         this.backButton = new BackButton();
         this.saveButton = new JButton("Create a new vehicle Type");
+        this.server = server;
 
         this.layout = new GridBagLayout();
         this.setLayout(this.layout);
@@ -130,6 +133,10 @@ public class AddVehiclePanel extends JPanel {
                 int nbDoor = (int) nbDoorField.getValue();
                 int nbPlace = (int) nbPlaceField.getValue();
                 int power = (int) powerField.getValue();
+                VehicleType vType = new VehicleType(brand,model,energy,gear,nbDoor,nbPlace,power);
+                if (server.addVehicle(vType)) {
+                    System.out.println("OUI");
+                }
             }
         });
 
@@ -139,11 +146,12 @@ public class AddVehiclePanel extends JPanel {
 
     }
     static void main() {
+        QueryRetyre serv = new QueryRetyre();
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Add Vehicule Frame Test");
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-            AddVehiclePanel aVP = new AddVehiclePanel();
+            AddVehiclePanel aVP = new AddVehiclePanel(serv);
             frame.add(aVP);
             frame.setSize(new Dimension(1920, 1080));
 
