@@ -5,16 +5,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import model.Piece;
 import model.VehicleType;
 import model.enums.EnergyType;
 import model.enums.TransmissionType;
+import org.hibernate.internal.util.collections.JoinedList;
 import querry.QueryRetyre;
+import java.util.List;
 
 public class AddVehiclePanel extends JPanel {
 
+    //Button
     private BackButton backButton;
     private LayoutManager layout;
     private JButton saveButton;
+
+    //Form field
     private JTextField brandField;
     private JTextField modelField;
     private JComboBox<EnergyType> energyField;
@@ -22,7 +28,12 @@ public class AddVehiclePanel extends JPanel {
     private JComboBox<TransmissionType> gearField;
     private JSpinner nbPlaceField;
     private JSpinner powerField;
+    private JList<Piece> compo;
+    private JScrollPane compoPane;
+
+    //BDD Actions
     private QueryRetyre server;
+    private List<Piece> pieces;
 
 
     public AddVehiclePanel(QueryRetyre server){
@@ -32,6 +43,14 @@ public class AddVehiclePanel extends JPanel {
         this.saveButton = new JButton("Create a new vehicle Type");
         this.server = server;
 
+        // Get Piece
+        this.pieces = server.getPiece();
+        DefaultListModel<Piece> model = new DefaultListModel<>();
+        for (Piece p:pieces){
+            model.addElement(p);;
+        }
+
+        //Set Layout
         this.layout = new GridBagLayout();
         this.setLayout(this.layout);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -54,7 +73,7 @@ public class AddVehiclePanel extends JPanel {
         nbDoorLab.setFont(font);gearLab.setFont(font);nbPlaceLab.setFont(font);powerLab.setFont(font);
         compoLab.setFont(font); msgSuccess.setFont(font);
 
-        //Set JtextFile
+        //Set Field for form
         this.brandField = new JTextField(20);
         this.modelField = new JTextField(20);
         this.energyField = new JComboBox<>(EnergyType.values());
@@ -62,6 +81,23 @@ public class AddVehiclePanel extends JPanel {
         this.gearField = new JComboBox<>(TransmissionType.values());
         this.nbPlaceField = new JSpinner(new SpinnerNumberModel(5,2,8,3));
         this.powerField = new JSpinner(new SpinnerNumberModel(100,1,9999,1));
+        this.compo = new JList<>(model); compo.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        this.compo.setCellRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                          int index, boolean isSelected, boolean cellHasFocus){
+                super.getListCellRendererComponent(list,value,index,isSelected,cellHasFocus);
+                if (value instanceof  Piece){
+                    Piece p = (Piece) value;
+                    setText(p.getName());
+                }
+                return this;
+            }
+        });
+        this.compoPane = new JScrollPane(this.compo);
+        this.compoPane.setPreferredSize(new Dimension(200,150));
+
+        //Modify font
         this.brandField.setFont(fontField);
         this.modelField.setFont(fontField);
         this.energyField.setFont(fontField);
@@ -69,8 +105,7 @@ public class AddVehiclePanel extends JPanel {
         this.gearField.setFont(fontField);
         this.nbPlaceField.setFont(fontField);
         this.powerField.setFont(fontField);
-
-
+        this.compo.setFont(fontField);
 
         // -- Set insets
         gbc.insets = new Insets(50,50,50,50);
@@ -117,7 +152,7 @@ public class AddVehiclePanel extends JPanel {
         gbc.gridx = 0; this.add(powerLab,gbc);
         gbc.gridx = 1; this.add(this.powerField,gbc);
         gbc.gridx = 2; this.add(compoLab,gbc);
-        gbc.gridx = 3; this.add(new JTextField(20),gbc);
+        gbc.gridx = 3; this.add(this.compoPane,gbc);
 
         //Line 5
         gbc.gridy = 5;
@@ -134,7 +169,11 @@ public class AddVehiclePanel extends JPanel {
                 int nbDoor = (int) nbDoorField.getValue();
                 int nbPlace = (int) nbPlaceField.getValue();
                 int power = (int) powerField.getValue();
+                List<Piece> pieces = compo.getSelectedValuesList();
                 VehicleType vType = new VehicleType(brand,model,energy,gear,nbDoor,nbPlace,power);
+                for (Piece p : pieces){
+                   vType.addPiece(p);
+                }
                 if (server.addVehicle(vType)) {
                     msgSuccess.setVisible(true);
                 }

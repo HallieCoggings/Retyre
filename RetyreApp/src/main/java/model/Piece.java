@@ -58,6 +58,10 @@ public class Piece {
         return priceU;
     }
 
+    public String getName() {
+        return name;
+    }
+
     /* ------- METHODS ------- */
     public boolean addUsage (InterventionType i){
         if (i==null){return false;}
