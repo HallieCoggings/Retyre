@@ -3,9 +3,13 @@ package gui;
 import querry.QueryRetyre;
 
 import javax.swing.*;
+import java.awt.*;
+import java.sql.SQLException;
 
 public class MainFrame extends JFrame {
     private QueryRetyre server;
+    private Header header;
+    private Body body;
     public MainFrame(){
         super();
         try{
@@ -14,8 +18,16 @@ public class MainFrame extends JFrame {
             JOptionPane optPane = new JOptionPane();
             JOptionPane.showMessageDialog(optPane,"Error - Impossible to reach SQL Server");
         }
+
+        this.header = new Header();
+        this.body = new Body();
+
         this.setTitle("Retyre - Auto2I FrameWork");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        this.add(header,BorderLayout.NORTH);
+        this.add(body,BorderLayout.CENTER);
+
         this.setSize(1200,800);
         this.setVisible(true);
     }
