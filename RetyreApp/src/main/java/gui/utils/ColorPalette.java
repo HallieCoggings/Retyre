@@ -6,7 +6,7 @@ public class ColorPalette {
 
     public static final Color DARK_BLUE = new Color(57, 76, 96);
     public static final Color LIGHT_GREY = new Color(226 , 226 , 226);
-    
+
     //Intervention state
     public static final Color RED_CRITICAL = new Color(255, 49, 49);
     public static final Color ORANGE_URGENT = new Color(255, 145, 77);
@@ -37,7 +37,7 @@ public class ColorPalette {
     public static final Color BACKGROUND_WHITE = Color.WHITE;
     public static final Color BACKGROUND_LIGHT = new Color(245, 245, 245);
     public static final Color BACKGROUND_DARK = new Color(60, 60, 60);
-    
+
     //BUttons
     public static final Color WHITE_BUTTON = new Color(240, 240, 240);
     public static final Color GREEN_BUTTON = new Color(126, 217, 87);
@@ -49,4 +49,9 @@ public class ColorPalette {
     //Highlighting parts
     public static final Color HIGHLIGHT_YELLOW = new Color(255, 255, 200);
     public static final Color HOVER_BLUE = new Color(200, 220, 255);
+
+    //Debug colors
+    public static final Color TEST_1 = Color.BLUE;
+    public static final Color TEST_2 = Color.PINK;
+    public static final Color TEST_3 = Color.GREEN;
 }
