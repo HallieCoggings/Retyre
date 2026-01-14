@@ -1,5 +1,7 @@
 package gui.components;
 
+import gui.utils.ViewConstant;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,7 +28,7 @@ public class Header extends JPanel {
         this.addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                layout.show(support,"addVT_Pan");
+                layout.show(support, ViewConstant.ADDVT_VIEW);
             }
         });
         this.add(addButton);

@@ -11,7 +11,7 @@ public class BackButton extends JButton {
         this.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                layout.show(support,"main_Pan");
+                layout.show(support,ViewConstant.MAIN_VIEW);
             }
         });
     }
