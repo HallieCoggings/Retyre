@@ -42,6 +42,7 @@ public class MainFrame extends JFrame {
         this.setTitle("Retyre - Auto2i Framework");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(1920, 1080);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
     }
 

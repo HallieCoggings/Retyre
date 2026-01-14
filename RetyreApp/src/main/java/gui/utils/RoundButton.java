@@ -11,15 +11,15 @@ public class RoundButton extends JButton {
     private Color currentColor;
     private int cornerRadius;
 
-    public RoundedButton(String text) {
+    public RoundButton(String text) {
         this(text, ColorPalette.DARK_BLUE, 15);
     }
 
-    public RoundedButton(String text, Color backgroundColor) {
+    public RoundButton(String text, Color backgroundColor) {
         this(text, backgroundColor, 15);
     }
 
-    public RoundedButton(String text, Color backgroundColor, int cornerRadius) {
+    public RoundButton(String text, Color backgroundColor, int cornerRadius) {
         super(text);
         this.baseColor = backgroundColor;
         this.currentColor = backgroundColor;

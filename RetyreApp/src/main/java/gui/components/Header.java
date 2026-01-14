@@ -21,7 +21,7 @@ public class Header extends JPanel {
         this.setPreferredSize(this.dimension);
         this.layout = new GridLayout(1,4);
         this.setLayout(this.layout);
-        this.addButton = new JButton("Add Vehicle");
+        this.addButton = new JButton("Add Vehicle Type");
         this.searchButton = new JButton("Search a vehicle");
         this.interventionButton = new JButton("Create an Intervnetion");
 
