@@ -2,6 +2,8 @@ package gui.components;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Header extends JPanel {
     private Dimension dimension;
@@ -10,7 +12,7 @@ public class Header extends JPanel {
     private JButton searchButton;
     private JButton interventionButton;
 
-    public Header(){
+    public Header(JPanel support, CardLayout layout){
         super();
         this.dimension = new Dimension(300,100);
         this.setBackground(Color.green);
@@ -21,8 +23,12 @@ public class Header extends JPanel {
         this.searchButton = new JButton("Search a vehicle");
         this.interventionButton = new JButton("Create an Intervnetion");
 
-        //this.addButton.addActionListener(); //TODO : Regarder comment implémente les actions listeners
-
+        this.addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                layout.show(support,"addVT_Pan");
+            }
+        });
         this.add(addButton);
         this.add(searchButton);
         this.add((interventionButton));

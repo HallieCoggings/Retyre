@@ -13,7 +13,7 @@ import model.enums.TransmissionType;
 import querry.QueryRetyre;
 import java.util.List;
 
-public class AddVehiclePanel extends JPanel {
+public class AddVehicleTypePanel extends JPanel {
 
     //Button
     private BackButton backButton;
@@ -36,10 +36,10 @@ public class AddVehiclePanel extends JPanel {
     private List<Piece> pieces;
 
 
-    public AddVehiclePanel(QueryRetyre server){
+    public AddVehicleTypePanel(QueryRetyre server,JPanel support, CardLayout layout){
         super();
         this.setBackground(Color.decode("#FFd75F"));
-        this.backButton = new BackButton();
+        this.backButton = new BackButton(support,layout);
         this.saveButton = new JButton("Create a new vehicle Type");
         this.server = server;
 
@@ -197,8 +197,8 @@ public class AddVehiclePanel extends JPanel {
             JFrame frame = new JFrame("Add Vehicule Frame Test");
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-            AddVehiclePanel aVP = new AddVehiclePanel(serv);
-            frame.add(aVP);
+            //AddVehicleTypePanel aVP = new AddVehicleTypePanel(serv);
+            //frame.add(aVP);
             frame.setSize(new Dimension(1920, 1080));
 
             frame.setLocationRelativeTo(null);
