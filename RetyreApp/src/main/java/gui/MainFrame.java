@@ -1,10 +1,11 @@
 package gui;
 
+import gui.components.Body;
+import gui.components.Header;
 import querry.QueryRetyre;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.SQLException;
 
 public class MainFrame extends JFrame {
     private QueryRetyre server;
