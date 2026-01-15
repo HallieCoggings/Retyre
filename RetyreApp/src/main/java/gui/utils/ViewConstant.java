@@ -5,4 +5,5 @@ public final class ViewConstant {
 
     public static final String MAIN_VIEW = "main_Pan";
     public static final String ADDVT_VIEW = "addVT_Pan";
+    public static final String ADDV_VIEW = "addV_Pan";
 }

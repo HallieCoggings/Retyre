@@ -1,7 +1,9 @@
 package gui;
 
 import gui.components.MainPanel;
+import gui.panel.AddVehiclePanel;
 import gui.panel.AddVehicleTypePanel;
+import gui.utils.ViewConstant;
 import querry.QueryRetyre;
 
 import javax.swing.*;
@@ -14,9 +16,7 @@ public class MainFrame extends JFrame {
 
     private MainPanel mainPanel;
     private AddVehicleTypePanel addVehicleTypePanel;
-
-    private static final String MAIN_VIEW = "main_Pan";
-    private static final String ADDVT_VIEW = "addVT_Pan";
+    private AddVehiclePanel addVehiclePanel;
 
     public MainFrame(){
         super();
@@ -30,13 +30,15 @@ public class MainFrame extends JFrame {
         }
         this.mainPanel = new MainPanel(this.supportPanel, this.layoutManager);
         this.addVehicleTypePanel = new AddVehicleTypePanel(this.server,this.supportPanel, this.layoutManager);
+        this.addVehiclePanel = new AddVehiclePanel(this.server,this.supportPanel, this.layoutManager);
 
 
         this.add(supportPanel);
-        this.supportPanel.add(mainPanel,MAIN_VIEW);
-        this.supportPanel.add(addVehicleTypePanel,ADDVT_VIEW);
+        this.supportPanel.add(mainPanel,ViewConstant.MAIN_VIEW);
+        this.supportPanel.add(addVehicleTypePanel,ViewConstant.ADDVT_VIEW);
+        this.supportPanel.add(addVehiclePanel, ViewConstant.ADDV_VIEW);
 
-        this.layoutManager.show(supportPanel,MAIN_VIEW);
+        this.layoutManager.show(supportPanel,ViewConstant.MAIN_VIEW);
 
 
         this.setTitle("Retyre - Auto2i Framework");
