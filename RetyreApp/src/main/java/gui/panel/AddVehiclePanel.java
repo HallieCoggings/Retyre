@@ -1,25 +1,37 @@
 package gui.panel;
 
 import gui.utils.BackButton;
+import model.Owner;
+import model.Vehicle;
+import model.VehicleType;
 import querry.QueryRetyre;
 
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
 
 public class AddVehiclePanel extends JPanel {
     private BackButton backButton;
     private LayoutManager layout;
     private JButton saveButton;
     private QueryRetyre server;
+    private List<VehicleType> typeV;
 
     //Field for form
-    private JTextField typeV;
-    private JTextField mileage;
-    private JTextField licencePlate;
-    private JTextField dateCirculation;
+    private JList<VehicleType> vehicleTypeJList;
+    private JScrollPane typeVPane;
+    private JSpinner mileage;
+    private JFormattedTextField licencePlate;
+    private JSpinner dateCirculation;
     private JTextField name;
     private JTextField fName;
-    private JTextField personalDetails;
+    private JFormattedTextField personalDetails;
 
     public AddVehiclePanel(QueryRetyre server,JPanel support, CardLayout layout){
         super();
@@ -27,6 +39,13 @@ public class AddVehiclePanel extends JPanel {
         this.backButton = new BackButton(support,layout);
         this.saveButton = new JButton("Add this vehicle");
         JLabel titlePane = new JLabel("Panel to add a vehicle and its owner");
+
+        //Get Vehicle Type
+        this.typeV = server.getVehicleType();
+        DefaultListModel<VehicleType> model = new DefaultListModel<>();
+        for(VehicleType t:typeV){
+            model.addElement(t);;
+        }
 
         // Set layout
         this.layout = new GridBagLayout();
@@ -42,25 +61,60 @@ public class AddVehiclePanel extends JPanel {
         JLabel nameLab = new JLabel("Owner's name :");
         JLabel fNameLab = new JLabel("Owner's first name :");
         JLabel perDetLab = new JLabel("Owner's personal details");
+        JLabel msgSucces = new JLabel("Vehicle and Owner successfully added to DB");
 
         Font font = new Font("Arial",Font.BOLD,18);
         Font fontField = new Font("Arial",Font.PLAIN,18);
         typeLab.setFont(font);mileageLab.setFont(font);lpLab.setFont(font);dateLab.setFont(font);
-        nameLab.setFont(font);fNameLab.setFont(font);perDetLab.setFont(font);
+        nameLab.setFont(font);fNameLab.setFont(font);perDetLab.setFont(font);msgSucces.setFont(font);
 
         //Set Field
-        this.typeV = new JTextField(20);
-        this.mileage = new JTextField(20);
-        this.licencePlate = new JTextField(20);
-        this.dateCirculation = new JTextField(20);
         this.name = new JTextField(20);
         this.fName = new JTextField(20);
-        this.personalDetails = new JTextField(20);
+        this.mileage = new JSpinner(new SpinnerNumberModel(1500,0,999999,1));
 
+        //Date Editor
+        JSpinner dateSpinner = new JSpinner(new SpinnerDateModel());
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(dateSpinner,"dd/MM/yyyy");
+        dateSpinner.setEditor(editor);
+        editor.getTextField().setFont(fontField);
+        this.dateCirculation = dateSpinner;
+
+        // Formated Text field
+        try {
+            MaskFormatter plateMask = new MaskFormatter("UU-###-UU");
+            plateMask.setPlaceholderCharacter('_');
+            this.licencePlate = new JFormattedTextField(plateMask);
+
+            MaskFormatter persoDetailMask = new MaskFormatter("## ## ## ## ##");
+            persoDetailMask.setPlaceholderCharacter('_');
+
+            this.personalDetails = new JFormattedTextField(persoDetailMask);
+
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        //Set VehicleType Form
+        this.vehicleTypeJList = new JList<>(model);
+        this.vehicleTypeJList.setCellRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                          int index, boolean isSelected, boolean cellHasFocus){
+             super.getListCellRendererComponent(list,value,index,isSelected,cellHasFocus);
+             if (value instanceof VehicleType){
+                 VehicleType v = (VehicleType) value;
+                 setText(v.getBrand() + " - " + v.getModel());
+             }
+             return this;
+            }
+        });
+        this.typeVPane = new JScrollPane(this.vehicleTypeJList);
+        this.typeVPane.setPreferredSize(new Dimension(200,150));
 
         //Set font
-        this.typeV.setFont(fontField);this.mileage.setFont(fontField);this.licencePlate.setFont(fontField);
-        this.dateCirculation.setFont(fontField);this.name.setFont(fontField);this.fName.setFont(fontField);
+        this.vehicleTypeJList.setFont(fontField);this.mileage.setFont(fontField);this.licencePlate.setFont(fontField);
+        this.name.setFont(fontField);this.fName.setFont(fontField);
         this.personalDetails.setFont(fontField);
 
         //-- Mise en place
@@ -94,7 +148,7 @@ public class AddVehiclePanel extends JPanel {
         // - Line 2
         gbc.gridy = 2;
         gbc.gridx = 0; this.add(typeLab,gbc);
-        gbc.gridx = 1; this.add(this.typeV,gbc);
+        gbc.gridx = 1; this.add(this.typeVPane,gbc);
         gbc.gridx = 2; this.add(lpLab,gbc);
         gbc.gridx = 3; this.add(this.licencePlate,gbc);
 
@@ -113,6 +167,37 @@ public class AddVehiclePanel extends JPanel {
         gbc.fill = GridBagConstraints.NONE;
         saveButton.setPreferredSize(new Dimension(500,70));
         this.add(saveButton,gbc);
+
+        //Line 5
+        gbc.gridy = 5;
+        gbc.gridx = 0;
+        gbc.gridwidth = 6;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        this.add(msgSucces,gbc);
+        msgSucces.setVisible(false);
+
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String ownerName = name.getText();
+                String ownerFName = fName.getText();
+                String ownerPDet = personalDetails.getText();
+
+                VehicleType vehicleType = vehicleTypeJList.getSelectedValue();
+                String vehicleLP = licencePlate.getText();
+                int vehicleKm = (int) mileage.getValue();
+                LocalDate vehicleDate = ((Date) dateCirculation.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                // JSpinner uses Date which is deprecated so we convert it
+
+                Owner owner = new Owner(ownerName,ownerFName,ownerPDet);
+                Vehicle vehicle = new Vehicle(vehicleLP,vehicleType,owner,vehicleKm,vehicleDate);
+                if (server.addVehicle(vehicle,owner,vehicleType)){
+                    msgSucces.setVisible(true);
+                }
+
+            }
+        });
 
 
 

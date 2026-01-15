@@ -34,7 +34,7 @@ public class Vehicle {
     private Set<Intervention> interventions;
 
     @Column(name = "Mileage", columnDefinition = "NUMERIC(10,2)")
-    private float mileage;
+    private int mileage;
 
     @Column(name= "CirculationDate")
     private LocalDate dateCirculation; //from java.util
@@ -45,14 +45,12 @@ public class Vehicle {
     }
 
     //Data
-    public Vehicle(String licencePlate, VehicleType vType, Owner owner, float mileage, LocalDate dateCirculation) {
+    public Vehicle(String licencePlate, VehicleType vType, Owner owner, int mileage, LocalDate dateCirculation) {
         if (StringUtils.checkString(licencePlate) && vType != null && owner != null && mileage>0 && dateCirculation != null) {
-            this.licencePlate = licencePlate;
+            this.licencePlate = licencePlate.toUpperCase();
             this.mileage = mileage;
             this.dateCirculation = dateCirculation;
             this.interventions = new HashSet<>();
-            if(!vType.addVehicle(this)){return;} //TODO : verify if its good pratice
-            if(!owner.addVehicle(this)){return;}
         }
     }
 

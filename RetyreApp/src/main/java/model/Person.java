@@ -31,14 +31,19 @@ public abstract class Person {
 
     public Person(String name, String firstName) {
         if (StringUtils.checkString(name) && StringUtils.checkString(firstName)) {
-            this.name = name;
-            this.firstName = firstName;
+            this.name = name.toUpperCase();
+            this.firstName = firstName.toUpperCase();
         }
     }
 
     /* ------- GETTER & SETTER ------- */
+    public String getName() {
+        return name;
+    }
 
-
+    public String getFirstName() {
+        return firstName;
+    }
 
     /* ------- METHODS ------- */
     @Override

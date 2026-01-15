@@ -30,12 +30,19 @@ public class Owner extends Person{
     public Owner(String name, String fName, String pDetails) {
         super(name,fName);
         if (StringUtils.checkString(pDetails)){
-            this.personalDetails = pDetails;
+            this.personalDetails = pDetails.toUpperCase();
             this.vehicles = new HashSet<>();
         }
     }
 
     /* ------- GETTER & SETTER ------- */
+    public String getPersonalDetails() {
+        return personalDetails;
+    }
+
+    public void setPersonalDetails(String personalDetails) {
+        this.personalDetails = personalDetails;
+    }
 
     /* ------- METHODS ------- */
     public boolean addVehicle(Vehicle v){

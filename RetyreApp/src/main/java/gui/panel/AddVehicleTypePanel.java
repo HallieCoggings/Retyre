@@ -174,14 +174,14 @@ public class AddVehicleTypePanel extends JPanel {
                 for (Piece p : pieces){
                    vType.addPiece(p);
                 }
-                if (server.addVehicle(vType)) {
+                if (server.addVehicleType(vType)) {
                     msgSuccess.setVisible(true);
                 }
             }
         });
         this.add(saveButton,gbc);
 
-        //Line 5
+        //Line 6
         gbc.gridy = 6;
         gbc.gridx = 0;
         gbc.gridwidth = 4;

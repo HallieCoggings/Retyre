@@ -70,8 +70,8 @@ public class VehicleType {
     public VehicleType(String brand, String model, EnergyType energy, TransmissionType gear, int nbDoors,
                        int nbPlace, int power) {
         if (StringUtils.checkString(brand) && StringUtils.checkString(model) && nbDoors >=3 && nbPlace >= 2 && power >0) {
-            this.brand = brand;
-            this.model = model;
+            this.brand = brand.toUpperCase();
+            this.model = model.toUpperCase();
             this.energy = energy;
             this.gear = gear;
             this.nbDoors = nbDoors;
@@ -98,6 +98,15 @@ public class VehicleType {
     public void setVehicleSet(Set<Vehicle> vehicleSet) {
         this.vehicleSet = vehicleSet;
     }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
     /* ------- METHODS ------- */
     public boolean addVehicle(Vehicle v){
         if(v==null){return false;}
@@ -146,7 +155,6 @@ public class VehicleType {
                 ", nbDoors=" + nbDoors +
                 ", nbPlace=" + nbPlace +
                 ", power=" + power +
-                ", vehicleSet=" + vehicleSet +
                 '}';
     }
 
