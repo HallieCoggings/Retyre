@@ -1,5 +1,8 @@
 # Retyre
 
+L'objectif de ce projet est de creer un outil permettant a un garage de gerer les interventions sur les vehicules. 
+Pour gerer ce projet, nous avons cree un tableau de suivi Trello, produit des mockups ainsi que le synoptique suivant:
+
 Mockups
 <img width="1716" height="959" alt="image" src="https://github.com/user-attachments/assets/849f5281-90d7-4116-8332-f857d9cbcc46" />
 <img width="1636" height="880" alt="image" src="https://github.com/user-attachments/assets/763ac648-4392-46b0-963e-bdbac0e76d37" />
