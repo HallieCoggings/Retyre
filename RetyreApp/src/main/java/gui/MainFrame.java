@@ -11,6 +11,16 @@ import querry.QueryRetyre;
 import javax.swing.*;
 import java.awt.*;
 
+//TODO :
+/*
+    1- Modify Owner gestion in AddVehiclePanel
+    2- Dynamic Search in search for a Vehicle
+    3- Add a Panel to see Vehicle History + next Intervention
+    4- Edit Main Frame to see next Intervention
+    5- Edit the DataBase
+    6- Vehicle Plan when selecting a Vehicle
+ */
+
 public class MainFrame extends JFrame {
     private CardLayout layoutManager;
     private JPanel supportPanel;
