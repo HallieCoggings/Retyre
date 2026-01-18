@@ -3,6 +3,8 @@ package gui;
 import gui.components.MainPanel;
 import gui.panel.AddVehiclePanel;
 import gui.panel.AddVehicleTypePanel;
+import gui.panel.InterventionPanel;
+import gui.panel.SearchVehiclePanel;
 import gui.utils.ViewConstant;
 import querry.QueryRetyre;
 
@@ -17,6 +19,8 @@ public class MainFrame extends JFrame {
     private MainPanel mainPanel;
     private AddVehicleTypePanel addVehicleTypePanel;
     private AddVehiclePanel addVehiclePanel;
+    private SearchVehiclePanel searchPanel;
+    private InterventionPanel interventionPanel;
 
     public MainFrame(){
         super();
@@ -31,12 +35,16 @@ public class MainFrame extends JFrame {
         this.mainPanel = new MainPanel(this.supportPanel, this.layoutManager);
         this.addVehicleTypePanel = new AddVehicleTypePanel(this.server,this.supportPanel, this.layoutManager);
         this.addVehiclePanel = new AddVehiclePanel(this.server,this.supportPanel, this.layoutManager);
+        this.searchPanel = new SearchVehiclePanel(this.server, this.supportPanel, this.layoutManager);
+        this.interventionPanel = new InterventionPanel(this.server,this.supportPanel,this.layoutManager);
 
 
         this.add(supportPanel);
         this.supportPanel.add(mainPanel,ViewConstant.MAIN_VIEW);
         this.supportPanel.add(addVehicleTypePanel,ViewConstant.ADDVT_VIEW);
         this.supportPanel.add(addVehiclePanel, ViewConstant.ADDV_VIEW);
+        this.supportPanel.add(searchPanel, ViewConstant.VEHICLELIST_VIEW);
+        this.supportPanel.add(interventionPanel, ViewConstant.INTERVENTION_VIEW);
 
         this.layoutManager.show(supportPanel,ViewConstant.MAIN_VIEW);
 

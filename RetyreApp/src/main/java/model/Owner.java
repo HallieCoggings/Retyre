@@ -64,6 +64,10 @@ public class Owner extends Person{
         return true;
     }
 
+    public String getFullName(){
+        return this.getName() +" " + this.getFirstName();
+    }
+
 
     @Override
     public boolean equals(Object o) {

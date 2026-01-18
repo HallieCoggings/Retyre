@@ -78,6 +78,10 @@ public class Vehicle {
         return mileage;
     }
 
+    public String getLicencePlate() {
+        return licencePlate;
+    }
+
     /* ------- METHODS ------- */
     public boolean addIntervention (Intervention i) {
         if (i==null){return false;}

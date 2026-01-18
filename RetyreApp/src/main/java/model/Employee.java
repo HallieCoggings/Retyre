@@ -35,6 +35,9 @@ public class Employee extends Person{
     }
 
     /* ------- GETTER & SETTER ------- */
+    public String getFullName (){
+        return this.getName() + " " + this.getFirstName();
+    }
 
     /* ------- METHODS ------- */
     public boolean addIntervention (Intervention i){

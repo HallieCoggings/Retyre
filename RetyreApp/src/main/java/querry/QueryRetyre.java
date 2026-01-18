@@ -1,10 +1,7 @@
 package querry;
 
 import jakarta.persistence.*;
-import model.Owner;
-import model.Piece;
-import model.Vehicle;
-import model.VehicleType;
+import model.*;
 
 import java.util.List;
 
@@ -93,4 +90,26 @@ public class QueryRetyre {
         }
         return true;
     }
+
+    // TODO : Fix the following methods
+    public List<Employee> getEmployees(){
+        return  null;
+    }
+
+    public boolean addIntervention(Intervention i){
+        return true;
+    }
+
+    public List<Vehicle> getVehicles(){
+        return null;
+    }
+
+    public List<InterventionType> getInterventionTypes(){
+        return null;
+    }
+
+    public List<Intervention> getInterventions(){
+        return null;
+    }
+    // END TODO
 }

@@ -79,6 +79,10 @@ public class InterventionType {
         return kmMax;
     }
 
+    public String getName() {
+        return name;
+    }
+
     /* ------- METHODS ------- */
     public boolean addIntervention (Intervention i){
         if (i==null){return false;}
