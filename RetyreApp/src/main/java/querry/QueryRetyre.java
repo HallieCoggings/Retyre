@@ -59,21 +59,7 @@ public class QueryRetyre {
         try{
             et.begin();
             VehicleType vehicleType = em.merge(vt);
-            Owner managedOwner;
-            try {
-                managedOwner = em.createQuery(
-                                "SELECT o FROM Owner o WHERE o.name = :n AND o.firstName = :fn", Owner.class)
-                        .setParameter("n", o.getName())
-                        .setParameter("fn", o.getFirstName())
-                        .getSingleResult();
-
-               //Avoid recreate Owner
-                managedOwner.setPersonalDetails(o.getPersonalDetails());
-            } catch (NoResultException e) {
-                // Create a new Owner
-                managedOwner = o;
-                em.persist(managedOwner);
-            }
+            Owner managedOwner = em.merge(o);
 
             vehicleType.addVehicle(v);
             managedOwner.addVehicle(v);
@@ -89,6 +75,15 @@ public class QueryRetyre {
             em.close();
         }
         return true;
+    }
+
+    public List<Owner> getOwners (){
+        EntityManager em = emf.createEntityManager();
+        String req = "SELECT o FROM Owner o";
+        Query query = em.createQuery(req);
+        List<Owner> owners = query.getResultList();
+        em.close();
+        return  owners;
     }
 
     // TODO : Fix the following methods

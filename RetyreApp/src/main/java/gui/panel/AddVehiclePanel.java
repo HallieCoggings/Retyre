@@ -7,6 +7,10 @@ import model.VehicleType;
 import querry.QueryRetyre;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -22,6 +26,7 @@ public class AddVehiclePanel extends JPanel {
     private JButton saveButton;
     private QueryRetyre server;
     private List<VehicleType> typeV;
+    private List<Owner> owners;
 
     //Field for form
     private JList<VehicleType> vehicleTypeJList;
@@ -32,6 +37,8 @@ public class AddVehiclePanel extends JPanel {
     private JTextField name;
     private JTextField fName;
     private JFormattedTextField personalDetails;
+    private JList<Owner> ownerJList;
+    private JScrollPane ownersPanel;
 
     public AddVehiclePanel(QueryRetyre server,JPanel support, CardLayout layout){
         super();
@@ -45,6 +52,13 @@ public class AddVehiclePanel extends JPanel {
         DefaultListModel<VehicleType> model = new DefaultListModel<>();
         for(VehicleType t:typeV){
             model.addElement(t);;
+        }
+
+        //Get Owners List
+        this.owners = server.getOwners();
+        DefaultListModel<Owner> ownerModel = new DefaultListModel<>();
+        for (Owner o:owners){
+            ownerModel.addElement(o);
         }
 
         // Set layout
@@ -62,11 +76,13 @@ public class AddVehiclePanel extends JPanel {
         JLabel fNameLab = new JLabel("Owner's first name :");
         JLabel perDetLab = new JLabel("Owner's personal details");
         JLabel msgSucces = new JLabel("Vehicle and Owner successfully added to DB");
+        JLabel ownerLab = new JLabel("Owners already registered :");
 
         Font font = new Font("Arial",Font.BOLD,18);
         Font fontField = new Font("Arial",Font.PLAIN,18);
         typeLab.setFont(font);mileageLab.setFont(font);lpLab.setFont(font);dateLab.setFont(font);
         nameLab.setFont(font);fNameLab.setFont(font);perDetLab.setFont(font);msgSucces.setFont(font);
+        ownerLab.setFont(font);
 
         //Set Field
         this.name = new JTextField(20);
@@ -112,12 +128,68 @@ public class AddVehiclePanel extends JPanel {
         this.typeVPane = new JScrollPane(this.vehicleTypeJList);
         this.typeVPane.setPreferredSize(new Dimension(200,150));
 
+        //Set Owner Form
+        this.ownerJList = new JList<>(ownerModel);
+        this.ownerJList.setCellRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                          int index, boolean isSelected, boolean cellHasFocus){
+                super.getListCellRendererComponent(list,value,index,isSelected,cellHasFocus);
+                if (value instanceof Owner){
+                    Owner o = (Owner) value;
+                    setText(o.getFullName());
+                }
+                return this;
+            }
+        });
+        this.ownersPanel = new JScrollPane(this.ownerJList);
+        this.ownersPanel.setPreferredSize(new Dimension(200,100));
+
+        this.ownerJList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting() && ownerJList.getSelectedValue()!=null){
+                    clearFormField();
+                }
+            }
+        });
+
         //Set font
         this.vehicleTypeJList.setFont(fontField);this.mileage.setFont(fontField);this.licencePlate.setFont(fontField);
         this.name.setFont(fontField);this.fName.setFont(fontField);
-        this.personalDetails.setFont(fontField);
+        this.personalDetails.setFont(fontField);this.ownerJList.setFont(fontField);
 
-        //-- Mise en place
+
+        //Add a document Listener
+        DocumentListener dl = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                handleDocChange();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                handleDocChange();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                handleDocChange();
+            }
+
+            private void handleDocChange(){
+                if (name.hasFocus() || fName.hasFocus() ||personalDetails.hasFocus()){
+                    clearOwnerList();
+                }
+            }
+        };
+
+        this.name.getDocument().addDocumentListener(dl);
+        this.fName.getDocument().addDocumentListener(dl);
+        this.personalDetails.getDocument().addDocumentListener(dl);
+
+
+        //-- Place element
         gbc.insets = new Insets(50,50,50,50);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
@@ -138,12 +210,14 @@ public class AddVehiclePanel extends JPanel {
 
         // - Line 1
         gbc.gridy = 1;
-        gbc.gridx = 0; this.add(nameLab,gbc);
-        gbc.gridx = 1; this.add(this.name,gbc);
-        gbc.gridx = 2; this.add(fNameLab,gbc);
-        gbc.gridx = 3; this.add(this.fName,gbc);
-        gbc.gridx = 4; this.add(perDetLab,gbc);
-        gbc.gridx = 5; this.add(this.personalDetails,gbc);
+        gbc.gridx = 0; this.add(ownerLab,gbc);
+        gbc.gridx = 1; this.add(this.ownersPanel,gbc);
+        gbc.gridx = 2; this.add(nameLab,gbc);
+        gbc.gridx = 3; this.add(this.name,gbc);
+        gbc.gridx = 4; this.add(fNameLab,gbc);
+        gbc.gridx = 5; this.add(this.fName,gbc);
+        gbc.gridx = 6; this.add(perDetLab,gbc);
+        gbc.gridx = 7; this.add(this.personalDetails,gbc);
 
         // - Line 2
         gbc.gridy = 2;
@@ -171,7 +245,7 @@ public class AddVehiclePanel extends JPanel {
         //Line 5
         gbc.gridy = 5;
         gbc.gridx = 0;
-        gbc.gridwidth = 6;
+        gbc.gridwidth = 7;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
         this.add(msgSucces,gbc);
@@ -180,17 +254,21 @@ public class AddVehiclePanel extends JPanel {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String ownerName = name.getText();
-                String ownerFName = fName.getText();
-                String ownerPDet = personalDetails.getText();
-
+                Owner owner;
+                if (ownerJList.getSelectedIndex()!=-1){
+                    owner = ownerJList.getSelectedValue();
+                }else{
+                    String ownerName = name.getText();
+                    String ownerFName = fName.getText();
+                    String ownerPersonal = personalDetails.getText();
+                    owner = new Owner(ownerName,ownerFName,ownerPersonal);
+                }
                 VehicleType vehicleType = vehicleTypeJList.getSelectedValue();
                 String vehicleLP = licencePlate.getText();
                 int vehicleKm = (int) mileage.getValue();
                 LocalDate vehicleDate = ((Date) dateCirculation.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 // JSpinner uses Date which is deprecated so we convert it
 
-                Owner owner = new Owner(ownerName,ownerFName,ownerPDet);
                 Vehicle vehicle = new Vehicle(vehicleLP,vehicleType,owner,vehicleKm,vehicleDate);
                 if (server.addVehicle(vehicle,owner,vehicleType)){
                     msgSucces.setVisible(true);
@@ -199,8 +277,17 @@ public class AddVehiclePanel extends JPanel {
             }
         });
 
-
-
         this.setPreferredSize(new Dimension(1920,1080));
+    }
+
+    public void clearFormField(){
+        this.name.setText("");
+        this.fName.setText("");
+        this.personalDetails.setText("");
+    }
+    private void clearOwnerList () {
+        if (ownerJList.getSelectedIndex() != -1){
+            ownerJList.clearSelection();;
+        }
     }
 }

@@ -191,18 +191,4 @@ public class AddVehicleTypePanel extends JPanel {
         this.setPreferredSize(new Dimension(1920,1080));
 
     }
-    static void main() {
-        QueryRetyre serv = new QueryRetyre();
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Add Vehicule Frame Test");
-            frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-            //AddVehicleTypePanel aVP = new AddVehicleTypePanel(serv);
-            //frame.add(aVP);
-            frame.setSize(new Dimension(1920, 1080));
-
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        });
-    }
 }
