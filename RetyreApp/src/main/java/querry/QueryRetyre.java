@@ -93,7 +93,12 @@ public class QueryRetyre {
 
     // TODO : Fix the following methods
     public List<Employee> getEmployees(){
-        return  null;
+        EntityManager em = emf.createEntityManager();
+        String req = "SELECT e FROM Employee e";
+        Query query = em.createQuery(req);
+        List<Employee> employees = query.getResultList();
+        em.close();
+        return employees;
     }
 
     public boolean addIntervention(Intervention i){
@@ -101,7 +106,12 @@ public class QueryRetyre {
     }
 
     public List<Vehicle> getVehicles(){
-        return null;
+        EntityManager em = emf.createEntityManager();
+        String req = "SELECT v FROM Vehicle v";
+        Query query = em.createQuery(req);
+        List<Vehicle> vehicles = query.getResultList();
+        em.close();
+        return vehicles;
     }
 
     public List<InterventionType> getInterventionTypes(){

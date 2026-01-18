@@ -85,7 +85,6 @@ public class Owner extends Person{
     public String toString() {
         return "Owner{" +
                 "personalDetails='" + personalDetails + '\'' +
-                ", vehicles=" + vehicles +
                 '}';
     }
 
