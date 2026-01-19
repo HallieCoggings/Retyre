@@ -17,19 +17,21 @@ public class Header extends JPanel {
     private JButton interventionButton;
     private JButton addVehicleButton;
     private JButton vehicleListButton;
+    private JButton historyButton;
 
     public Header(JPanel support, CardLayout layout){
         super();
         this.dimension = new Dimension(300,100);
         this.setBackground(ColorPalette.BACKGROUND_WHITE);
         this.setPreferredSize(this.dimension);
-        this.layout = new GridLayout(1,6);
+        this.layout = new GridLayout(1,7);
         this.setLayout(this.layout);
         this.addTypeButton = new RoundButton("Add Vehicle Type");
         //this.searchButton = new RoundButton("Search a vehicle");
         this.interventionButton = new RoundButton("Create an Intervention");
         this.addVehicleButton = new RoundButton("Add Vehicle");
         this.vehicleListButton = new RoundButton("Vehicle List");
+        this.historyButton = new RoundButton("Vehicle History");
 
         this.addTypeButton.addActionListener(new ActionListener() {
             @Override
@@ -52,10 +54,17 @@ public class Header extends JPanel {
                 layout.show(support,ViewConstant.VEHICLELIST_VIEW);
             }
         });
-        //this.add(searchButton);
         this.add((interventionButton));
         interventionButton.addActionListener(e -> {
             layout.show(support, ViewConstant.INTERVENTION_VIEW);
+        });
+
+        this.add(historyButton);
+        historyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                layout.show(support,ViewConstant.HISTORY_VIEW);
+            }
         });
     }
 }

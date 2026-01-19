@@ -1,10 +1,7 @@
 package gui;
 
 import gui.components.MainPanel;
-import gui.panel.AddVehiclePanel;
-import gui.panel.AddVehicleTypePanel;
-import gui.panel.InterventionPanel;
-import gui.panel.SearchVehiclePanel;
+import gui.panel.*;
 import gui.utils.ViewConstant;
 import querry.QueryRetyre;
 
@@ -16,8 +13,10 @@ import java.awt.*;
     2- Dynamic Search in search for a Vehicle
     3- Add a Panel to see Vehicle History + next Intervention
     4- Edit Main Frame to see next Intervention
-    5- Edit the DataBase
+    5- Clear the DataBase (delete some test entries)
     6- Vehicle Plan when selecting a Vehicle
+    7- Edit AddVehicleType and AddVehicle panel
+    8- Modify Estimated price -> use function to calculate price
  */
 
 public class MainFrame extends JFrame {
@@ -30,6 +29,7 @@ public class MainFrame extends JFrame {
     private AddVehiclePanel addVehiclePanel;
     private SearchVehiclePanel searchPanel;
     private InterventionPanel interventionPanel;
+    private HistoryPanel historyPanel;
 
     public MainFrame(){
         super();
@@ -46,6 +46,7 @@ public class MainFrame extends JFrame {
         this.addVehiclePanel = new AddVehiclePanel(this.server,this.supportPanel, this.layoutManager);
         this.searchPanel = new SearchVehiclePanel(this.server, this.supportPanel, this.layoutManager);
         this.interventionPanel = new InterventionPanel(this.server,this.supportPanel,this.layoutManager);
+        this.historyPanel = new HistoryPanel(this.server, this.supportPanel,this.layoutManager);
 
 
         this.add(supportPanel);
@@ -54,6 +55,7 @@ public class MainFrame extends JFrame {
         this.supportPanel.add(addVehiclePanel, ViewConstant.ADDV_VIEW);
         this.supportPanel.add(searchPanel, ViewConstant.VEHICLELIST_VIEW);
         this.supportPanel.add(interventionPanel, ViewConstant.INTERVENTION_VIEW);
+        this.supportPanel.add(historyPanel,ViewConstant.HISTORY_VIEW);
 
         this.layoutManager.show(supportPanel,ViewConstant.MAIN_VIEW);
 
