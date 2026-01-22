@@ -1,6 +1,7 @@
 package gui.panel;
 
 import gui.utils.BackButton;
+import gui.utils.ColorPalette;
 import model.Owner;
 import model.Vehicle;
 import model.VehicleType;
@@ -46,6 +47,7 @@ public class AddVehiclePanel extends JPanel {
         this.backButton = new BackButton(support,layout);
         this.saveButton = new JButton("Add this vehicle");
         JLabel titlePane = new JLabel("Panel to add a vehicle and its owner");
+        this.setBackground(ColorPalette.BACKGROUND_LIGHT);
 
         //Get Vehicle Type
         this.typeV = server.getVehicleType();
@@ -80,6 +82,8 @@ public class AddVehiclePanel extends JPanel {
 
         Font font = new Font("Arial",Font.BOLD,18);
         Font fontField = new Font("Arial",Font.PLAIN,18);
+        titlePane.setFont(new Font("Arial", Font.BOLD, 28));
+        titlePane.setForeground(ColorPalette.DARK_BLUE);
         typeLab.setFont(font);mileageLab.setFont(font);lpLab.setFont(font);dateLab.setFont(font);
         nameLab.setFont(font);fNameLab.setFont(font);perDetLab.setFont(font);msgSucces.setFont(font);
         ownerLab.setFont(font);
@@ -236,9 +240,8 @@ public class AddVehiclePanel extends JPanel {
         //Line 4
         gbc.gridy = 4;
         gbc.gridx = 0;
-        gbc.gridwidth = 6;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridwidth = 7;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         saveButton.setPreferredSize(new Dimension(500,70));
         this.add(saveButton,gbc);
 
@@ -246,6 +249,7 @@ public class AddVehiclePanel extends JPanel {
         gbc.gridy = 5;
         gbc.gridx = 0;
         gbc.gridwidth = 7;
+        gbc.weightx = 1;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
         this.add(msgSucces,gbc);

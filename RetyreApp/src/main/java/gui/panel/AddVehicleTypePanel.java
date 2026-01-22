@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import gui.utils.BackButton;
+import gui.utils.ColorPalette;
 import model.Piece;
 import model.VehicleType;
 import model.enums.EnergyType;
@@ -38,7 +39,7 @@ public class AddVehicleTypePanel extends JPanel {
 
     public AddVehicleTypePanel(QueryRetyre server,JPanel support, CardLayout layout){
         super();
-        this.setBackground(Color.decode("#FFd75F"));
+        this.setBackground(ColorPalette.BACKGROUND_LIGHT);
         this.backButton = new BackButton(support,layout);
         this.saveButton = new JButton("Create a new vehicle Type");
         this.server = server;
@@ -69,7 +70,9 @@ public class AddVehicleTypePanel extends JPanel {
         JLabel compoLab = new JLabel("Components :");
         JLabel msgSuccess = new JLabel("A new vehicle type was added");
 
-        titleLab.setFont(font);brandLab.setFont(font);modelLab.setFont(font);energyLab.setFont(font);
+        titleLab.setFont(new Font("Arial", Font.BOLD, 28));
+        titleLab.setForeground(ColorPalette.DARK_BLUE);
+        brandLab.setFont(font);modelLab.setFont(font);energyLab.setFont(font);
         nbDoorLab.setFont(font);gearLab.setFont(font);nbPlaceLab.setFont(font);powerLab.setFont(font);
         compoLab.setFont(font); msgSuccess.setFont(font);
 

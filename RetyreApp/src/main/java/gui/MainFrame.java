@@ -11,11 +11,9 @@ import java.awt.*;
 //TODO :
 /*
     2- Dynamic Search in search for a Vehicle
-    3- Add a Panel to see Vehicle History + next Intervention
     4- Edit Main Frame to see next Intervention
     5- Clear the DataBase (delete some test entries)
     6- Vehicle Plan when selecting a Vehicle
-    7- Edit AddVehicleType and AddVehicle panel
     8- Modify Estimated price -> use function to calculate price
  */
 
