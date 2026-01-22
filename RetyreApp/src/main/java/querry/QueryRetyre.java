@@ -107,6 +107,21 @@ public class QueryRetyre {
     }
 
     public boolean addIntervention(Intervention i){
+        if (i==null){return false;}
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
+        try{
+            et.begin();
+            em.persist(i);
+            et.commit();
+        }catch (Exception e){
+            System.out.println("Rollback");
+            e.printStackTrace();
+            et.rollback();
+            return false;
+        }finally {
+            em.close();
+        }
         return true;
     }
 
