@@ -1,11 +1,15 @@
 package gui.panel;
 
 import gui.utils.BackButton;
+import model.Intervention;
 import model.Vehicle;
 import querry.QueryRetyre;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class HistoryPanel extends JPanel {
@@ -13,6 +17,12 @@ public class HistoryPanel extends JPanel {
     private QueryRetyre server;
     private List<Vehicle> vehicleList;
     private JComboBox<Vehicle> vehicleJComboBox;
+
+
+    private JScrollPane sPanel;
+    private String[] jTableColumns ={"Intervention Name", "Intervention Type", "Date", "Price","Status","Valid Until"};
+    private List<Intervention> interventions;
+    private AbstractTableModel tableModel;
 
     public HistoryPanel(QueryRetyre server, JPanel support, CardLayout cl){
         super();
@@ -38,8 +48,56 @@ public class HistoryPanel extends JPanel {
             }
         });
 
+        vehicleJComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Vehicle v = (Vehicle) vehicleJComboBox.getSelectedItem();
+                interventions = server.getInterventionsVehicle(v);
+                tableModel.fireTableDataChanged();
+            }
+        });
+
+
+        tableModel = new AbstractTableModel() {
+            @Override
+            public int getRowCount() {
+                return interventions == null ? 0:interventions.size();
+            }
+
+            @Override
+            public int getColumnCount() {
+                return jTableColumns.length;
+            }
+
+            @Override
+            public String getColumnName(int column){
+                return jTableColumns[column];
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                Intervention i = interventions.get(rowIndex);
+                switch (columnIndex){
+                    case 0 : return i.getInterventionType().getName();
+                    case 1 : return i.getInterventionType().getCategory();
+                    case 2 : return i.getInterventionDate();
+                    case 3 : return i.getPrice();
+                    case 4 : return i.getStatus();
+                    case 5 : return i.getNextDate();
+                    default: return null;
+                }
+            }
+        };
+
+        JTable jTable = new JTable(tableModel);
+        this.sPanel = new JScrollPane(jTable);
+
+
+
+
         this.add(backButton);
         this.add(vehicleJComboBox);
+        this.add(sPanel,BorderLayout.CENTER);
 
     }
 }

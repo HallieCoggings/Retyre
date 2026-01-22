@@ -86,6 +86,16 @@ public class QueryRetyre {
         return  owners;
     }
 
+    public List<Intervention> getInterventionsVehicle(Vehicle vehicle){
+        EntityManager em = emf.createEntityManager();
+        String req = "SELECT i FROM Intervention i JOIN i.vehicle v WHERE v.licencePlate = :plate";
+        Query query = em.createQuery(req);
+        query.setParameter("plate",vehicle.getLicencePlate());
+        List<Intervention> interventions = query.getResultList();
+        em.close();
+        return  interventions;
+    }
+
     // TODO : Fix the following methods
     public List<Employee> getEmployees(){
         EntityManager em = emf.createEntityManager();
@@ -113,8 +123,8 @@ public class QueryRetyre {
         return null;
     }
 
-    public List<Intervention> getInterventions(){
-        return null;
-    }
+    public List<Intervention> getInterventions(){return null;}
+
+
     // END TODO
 }

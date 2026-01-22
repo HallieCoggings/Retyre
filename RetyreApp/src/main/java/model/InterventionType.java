@@ -123,8 +123,6 @@ public class InterventionType {
                 ", category=" + category +
                 ", kmMax=" + kmMax +
                 ", delay=" + delay +
-                ", interventionSet=" + interventionSet +
-                ", piecesUsed=" + piecesUsed +
                 '}';
     }
 

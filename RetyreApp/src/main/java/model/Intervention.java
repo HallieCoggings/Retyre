@@ -72,6 +72,34 @@ public class Intervention {
         this.employee =employee;
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public InterventionType getInterventionType() {
+        return interventionType;
+    }
+
+    public LocalDate getInterventionDate() {
+        return interventionDate;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public InterventionStatus getStatus() {
+        return status;
+    }
+
+    public float getKmMax() {
+        return kmMax;
+    }
+
+    public LocalDate getNextDate () {
+        return interventionDate.plusDays(interventionType.getDelay());
+    }
+
     public void setKmMax(float kmMax) {
         this.kmMax = kmMax;
     }
