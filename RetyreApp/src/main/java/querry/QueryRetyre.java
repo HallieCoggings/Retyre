@@ -96,7 +96,7 @@ public class QueryRetyre {
         return  interventions;
     }
 
-    // TODO : Fix the following methods
+    // QUERY MADE BY KERMIT
     public List<Employee> getEmployees(){
         EntityManager em = emf.createEntityManager();
         String req = "SELECT e FROM Employee e";
@@ -120,11 +120,19 @@ public class QueryRetyre {
     }
 
     public List<InterventionType> getInterventionTypes(){
-        return null;
+        EntityManager em = emf.createEntityManager();
+        String req = "SELECT t FROM InterventionType t";
+        Query query = em.createQuery(req);
+        List<InterventionType> interventionType = query.getResultList();
+        em.close();
+        return interventionType;
     }
 
-    public List<Intervention> getInterventions(){return null;}
-
-
-    // END TODO
+    public List<Intervention> getInterventions(){        EntityManager em = emf.createEntityManager();
+        String req = "SELECT i FROM Intervention i";
+        Query query = em.createQuery(req);
+        List<Intervention> intervention = query.getResultList();
+        em.close();
+        return intervention;
+    }
 }

@@ -1,6 +1,7 @@
 package gui.panel;
 
 import gui.utils.BackButton;
+import gui.utils.ColorPalette;
 import model.Intervention;
 import model.Vehicle;
 import querry.QueryRetyre;
@@ -24,11 +25,16 @@ public class HistoryPanel extends JPanel {
     private List<Intervention> interventions;
     private AbstractTableModel tableModel;
 
+
+    private LayoutManager layout;
+
     public HistoryPanel(QueryRetyre server, JPanel support, CardLayout cl){
         super();
         this.backButton = new BackButton(support,cl);
         this.server = server;
         this.vehicleList = server.getVehicles();
+        this.setBackground(ColorPalette.BACKGROUND_LIGHT);
+        JLabel titlePanel = new JLabel("Vehicle History");
 
         DefaultComboBoxModel<Vehicle> model = new DefaultComboBoxModel<>();
         for (Vehicle v:vehicleList){
@@ -91,13 +97,38 @@ public class HistoryPanel extends JPanel {
 
         JTable jTable = new JTable(tableModel);
         this.sPanel = new JScrollPane(jTable);
+        this.sPanel.setPreferredSize(new Dimension(1920,1080));
 
 
+        titlePanel.setFont(new Font("Arial", Font.BOLD, 28));
+        titlePanel.setForeground(ColorPalette.DARK_BLUE);
+
+        //Graphical gestion
+        this.layout = new GridBagLayout();
+        this.setLayout(this.layout);;
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(50,50,50,50);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        //Line 0
+        gbc.gridwidth = 1;
+        gbc.gridy = 0;
+        gbc.gridx = 0; this.add(backButton,gbc);
+        gbc.gridx=1;gbc.gridwidth = 3;gbc.insets = new Insets(50,250,50,50);
+        this.add(titlePanel);
+
+        gbc.insets = new Insets(50,50,50,50);
+        gbc.gridwidth =1;
+        //Line 1
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx =1;
+        gbc.gridx =1; this.add(vehicleJComboBox,gbc);
 
 
-        this.add(backButton);
-        this.add(vehicleJComboBox);
-        this.add(sPanel,BorderLayout.CENTER);
+        //line 2
+        gbc.gridy =2;
+        gbc.gridx = 1;this.add(sPanel,gbc);
 
     }
 }
