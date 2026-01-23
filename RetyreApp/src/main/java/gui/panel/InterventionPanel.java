@@ -261,7 +261,7 @@ public class InterventionPanel extends JPanel {
         gbc.fill = GridBagConstraints.NONE;
         this.add(commentsLabel, gbc);
 
-// TextArea commence sous les champs (comme la capture 2)
+// TextArea commence sous les champs
         gbc.gridx = 1;
         gbc.gridwidth = 5;
         gbc.weightx = 1.0;
