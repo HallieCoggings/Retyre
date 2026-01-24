@@ -112,6 +112,8 @@ public class HistoryPanel extends JPanel {
 
         //Line 0
         gbc.gridwidth = 1;
+        gbc.weighty = 0; // Element dont take vertical space
+        gbc.anchor = GridBagConstraints.PAGE_START; //align top
         gbc.gridy = 0;
         gbc.gridx = 0; this.add(backButton,gbc);
         gbc.gridx=1;gbc.gridwidth = 3;gbc.insets = new Insets(50,250,50,50);
@@ -122,13 +124,24 @@ public class HistoryPanel extends JPanel {
         //Line 1
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx =1;
+        gbc.weightx =1.0;
         gbc.gridx =1; this.add(vehicleJComboBox,gbc);
 
 
         //line 2
         gbc.gridy =2;
+        gbc.weightx =1.0;
+        gbc.weighty =0.3;
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 1;this.add(sPanel,gbc);
+
+        //line 3
+        gbc.gridy = 3;
+        gbc.weighty=1;
+        gbc.fill = GridBagConstraints.BOTH;
+        JPanel blank = new JPanel();
+        blank.setBackground(ColorPalette.BACKGROUND_LIGHT);
+        this.add(blank, gbc);
 
     }
 }
